@@ -14,7 +14,6 @@
 <p>
   I hope you enjoyed that poem. Good luck in your many journeys.
 </p>
-<a href="/about">go to About</a>
 
 <style>
     .poem {
