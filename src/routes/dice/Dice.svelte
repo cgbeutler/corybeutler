@@ -1,5 +1,5 @@
 <script lang="ts">
-    import D6 from './d6.svelte'
+    import D6 from './D6.svelte'
 
     let nextId = 0
     let diceIds = []

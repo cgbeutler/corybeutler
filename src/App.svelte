@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Router, Link, Route } from 'svelte-routing'
-  import Home from './routes/home.svelte'
-  import Dice from './routes/dice/dice.svelte'
-  import EyeRoller from './routes/eyeroller/eyeroller.svelte'
+  import Home from './routes/Home.svelte'
+  import Dice from './routes/dice/Dice.svelte'
+  import EyeRoller from './routes/eyeroller/Eyeroller.svelte'
 
   export let url :string = ""
 </script>
