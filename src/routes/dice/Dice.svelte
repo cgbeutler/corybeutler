@@ -130,18 +130,17 @@
 
 .result-label {
     color: rgba(204, 204, 204, 0.59);
-    min-width: 2em;
+    min-width: 2.5em;
     margin: 0;
-    padding: 0 0.5em 0 0.5em;
+    padding: 0;
     border: 1px solid rgba(204, 204, 204, 0.59);
     justify-self: end;
 }
 .result {
     color: rgb(204, 204, 204);
-    min-width: 2.1em;
+    min-width: 3.2em;
     margin: 0;
     padding: 0;
-    padding: 0 0.5em 0 0.5em;
     border: 1px solid rgb(204, 204, 204);
     justify-self: start;
 }
