@@ -66,8 +66,8 @@
     </div>
 
     <div class="d-flex justify-content-center mb-4">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rollAll}> Roll All </button>
-        <button class="button-outlined" disabled={(activeDice.all ?? 0) <= 0} on:click={rollActive}> Roll {activeDice.all ?? 0} </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rollAll}> Reroll All </button>
+        <button class="button-outlined" disabled={(activeDice.all ?? 0) <= 0} on:click={rollActive}> Reroll {activeDice.all ?? 0} </button>
     </div>
     <div class="d-flex justify-content-center mb-4">
         <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeAll}> Remove All </button>
@@ -75,11 +75,17 @@
     </div>
 
     <h2 class="text-center"> Total: {rollSum} </h2>
-    <div class="grid-c4">
+    <h3 class="text-center"> With Modifiers: </h3>
+    <div class="result-grid-c2">
         {#each {length: 5} as _, i}
-            <h4 class="grid-item"> [{-(i+1)}]:&nbsp;&nbsp;{rollSum-(i+1)} </h4>
-            <h4 class="grid-item"> [+{i+1}]:&nbsp;&nbsp;{rollSum+i+1} </h4>
-            <h4 class="grid-item"> [+{i+6}]:&nbsp;&nbsp;{rollSum+i+6} </h4>
+            <h4 class="result-label">{-i-1}</h4>  <h4 class="result">{rollSum-i-1}</h4>
+            <h4 class="result-label">+{i+1}</h4>  <h4 class="result">{rollSum+i+1}</h4>
+        {/each}
+    </div>
+    <div class="result-grid-c2">
+        {#each {length: 5} as _, i}
+            <h4 class="result-label">{-i-6}</h4>  <h4 class="result">{rollSum-i-6}</h4>
+            <h4 class="result-label">+{i+6}</h4>  <h4 class="result">{rollSum+i+6}</h4>
         {/each}
     </div>
 </div>
@@ -98,6 +104,11 @@
     justify-content: center;
 }
 
+.button-outlined:disabled {
+    color: rgba(204, 204, 204, 0.59);
+    border: 2px solid rgba(204, 204, 204, 0.59);
+}
+
 .dice-box {
     display: flex;
     flex-wrap: wrap;
@@ -111,13 +122,28 @@
     height: 50px;
 }
 
-.grid-c4 {
+.result-grid-c2 {
     display: grid;
-    grid-template-columns: auto auto auto;
+    margin: 1em 0 1em 0;
+    grid-template-columns: repeat(4, auto);
 }
-.grid-item {
+
+.result-label {
+    color: rgba(204, 204, 204, 0.59);
+    min-width: 2em;
+    margin: 0;
+    padding: 0 0.5em 0 0.5em;
+    border: 1px solid rgba(204, 204, 204, 0.59);
+    justify-self: end;
+}
+.result {
+    color: rgb(204, 204, 204);
+    min-width: 2.1em;
     margin: 0;
     padding: 0;
+    padding: 0 0.5em 0 0.5em;
+    border: 1px solid rgb(204, 204, 204);
+    justify-self: start;
 }
 
 </style>
