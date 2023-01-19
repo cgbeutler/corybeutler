@@ -21,13 +21,13 @@
 
 
     // Aggregate the current selection whenever it changes
-    let activeDice = { all: 0 }
-    $: activeDice = diceData.reduce( (prev,curr) => {
-        if (!curr.active) return prev;
-        prev.all = prev.all +1;
+    let totalDice = { active: 0 }
+    $: totalDice = diceData.reduce( (prev,curr) => {
         if (prev.hasOwnProperty( curr.sides )) prev[curr.sides] = prev[curr.sides] + 1;
         else prev[curr.sides] = 1;
-    }, { all: 0 } )
+        if (curr.active) prev.active = prev.active +1;
+        return prev;
+    }, { active: 0 } )
 
     let rollSum :number = 0;
     function updateResults() {
@@ -54,9 +54,9 @@
     
     <div class="dice-box">
         {#each [2,4,6,8,10,12,20] as s}
-            <button type="button" class="button-outlined die d{s}-slot" on:click={()=>addDie(s)}> {activeDice[s] ?? 0}d{s} </button>
+            <button type="button" class="button-outlined die d{s}-slot" on:click={()=>addDie(s)}> {totalDice[s] ?? 0}d{s} </button>
         {/each}
-        <button type="button" class="button-outlined die dF-slot" on:click={()=>addDie(-1)}> {activeDice[-1] ?? 0}dF </button>
+        <button type="button" class="button-outlined die dF-slot" on:click={()=>addDie(-1)}> {totalDice[-1] ?? 0}dF </button>
     </div>
     
     <div class="dice-box">
@@ -67,11 +67,11 @@
 
     <div class="d-flex justify-content-center mb-4">
         <button class="button-outlined" disabled={diceData.length <= 0} on:click={rollAll}> Reroll All </button>
-        <button class="button-outlined" disabled={(activeDice.all ?? 0) <= 0} on:click={rollActive}> Reroll {activeDice.all ?? 0} </button>
+        <button class="button-outlined" disabled={(totalDice.active ?? 0) <= 0} on:click={rollActive}> Reroll {totalDice.active ?? 0} </button>
     </div>
     <div class="d-flex justify-content-center mb-4">
         <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeAll}> Remove All </button>
-        <button class="button-outlined" disabled={(activeDice.all ?? 0) <= 0} on:click={removeActive}> Remove {activeDice.all ?? 0} </button>
+        <button class="button-outlined" disabled={(totalDice.active ?? 0) <= 0} on:click={removeActive}> Remove {totalDice.active ?? 0} </button>
     </div>
 
     <h2 class="text-center"> Total: {rollSum} </h2>
