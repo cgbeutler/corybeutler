@@ -1,34 +1,44 @@
 <script lang="ts">
+    export let sides :number = 0;
     export let result :number = 0;
     export let active :boolean = false;
 
-    export function roll() {
-        result = Math.floor( Math.random() * 6 ) + 1
-        active = false
-        restartAnimation()
-    }
-    export function rollIfActive() {
-        if (!active) { return }
-        result = Math.floor( Math.random() * 6 ) + 1
-        active = false
-        restartAnimation()
-    }
+    let die;
 
-    let die
-
-    function restartAnimation() {
+    function _roll() {
+        if (sides > 0) return Math.floor( Math.random() * sides ) + 1;
+        if (sides == -1) return Math.floor( Math.random() * 3 ) - 1;
+        return 0;
+    }
+    function _restartAnimation() {
         if (!die) return;
         die.style.animation = 'none';
         die.offsetHeight;
         die.style.animation = null;
     }
 
-    $:result = Math.floor( Math.random() * 6 ) + 1
+    export function roll() {
+        result = _roll();
+        active = false;
+        _restartAnimation();
+    }
+    export function rollIfActive() {
+        if (!active) return;
+        result = _roll();
+        active = false;
+        _restartAnimation();
+    }
+
+    $: result = _roll()
 </script>
 
 <button bind:this={die} type="button" class="die" class:active={active} on:click={() => {active = !active}}>
-    {#if result !== 0}
+    {#if sides > 0}
         {result}
+    {:else if sides == -1}
+        {result == -1 ? "-" : result == 1 ? "+" : '\xa0'}
+    {:else}
+        '\xa0'
     {/if}
 </button>
 
