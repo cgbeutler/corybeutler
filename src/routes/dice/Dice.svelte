@@ -99,14 +99,14 @@
     <h3 class="text-center" style="margin: 10px auto 2px auto;"> Modifiers </h3>
     <div class="result-grid-c2">
         {#each {length: 5} as _, i}
-            <h4 class="result-label">{-i-1}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)-i-1}</h4>
-            <h4 class="result-label">+{i+1}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)+i+1}</h4>
+            <h4 class="result-label">{-i-1}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)-i-1}</h4>
+            <h4 class="result-label">+{i+1}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)+i+1}</h4>
         {/each}
     </div>
     <div class="result-grid-c2">
         {#each {length: 5} as _, i}
-            <h4 class="result-label">{-i-6}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)-i-6}</h4>
-            <h4 class="result-label">+{i+6}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)+i+6}</h4>
+            <h4 class="result-label">{-i-6}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)-i-6}</h4>
+            <h4 class="result-label">+{i+6}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)+i+6}</h4>
         {/each}
     </div>
 </div>
