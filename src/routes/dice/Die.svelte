@@ -44,43 +44,45 @@
 </button>
 
 <style>
-    .die {
-        display: inline-flex;
-        background-color: white;
-        color: black;
-        width: 50px;
-        height: 50px;
-        border-radius: 10%;
-        margin: 5px;
-        padding: 5px;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        font-weight: bold;
-        animation-name: shake;
-        animation-duration: 0.2s;
-        transform-origin: 50% 50%;
-        animation-iteration-count: 1;
-    }
-    .die.active {
-        animation-name: shake;
-        animation-duration: 0.4s;
-        transform-origin: 50% 50%;
-        animation-iteration-count: infinite;
-    }
+.die {
+    display: inline-flex;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: transparent;
+    color: black;
+    width: 64px;
+    height: 64px;
+    border-radius: 10%;
+    margin: 5px;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    animation-name: shake;
+    animation-duration: 0.2s;
+    transform-origin: 50% 50%;
+    animation-iteration-count: 1;
+}
+.die.active {
+    animation-name: shake;
+    animation-duration: 0.4s;
+    transform-origin: 50% 50%;
+    animation-iteration-count: infinite;
+}
 
-    @keyframes shake {
-        0% { -webkit-transform: translate(1px, 1px) rotate(0deg); } 
-        10% { -webkit-transform: translate(-1px, -1px) rotate(-1deg); }
-        20% { -webkit-transform: translate(-1px, 0px) rotate(1deg); }
-        30% { -webkit-transform: translate(0px, 1px) rotate(0deg); }
-        40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
-        50% { -webkit-transform: translate(-1px, 1px) rotate(-1deg); }
-        60% { -webkit-transform: translate(-1px, 1px) rotate(0deg); }
-        70% { -webkit-transform: translate(1px, 1px) rotate(-1deg); }
-        80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
-        90% { -webkit-transform: translate(1px, 1px) rotate(0deg); }
-        100% { -webkit-transform: translate(1px, -1px) rotate(-1deg); }
-    }
-
+@keyframes shake {
+    0% { -webkit-transform: translate(1px, 1px) rotate(0deg); } 
+    10% { -webkit-transform: translate(-1px, -1px) rotate(-1deg); }
+    20% { -webkit-transform: translate(-1px, 0px) rotate(1deg); }
+    30% { -webkit-transform: translate(0px, 1px) rotate(0deg); }
+    40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+    50% { -webkit-transform: translate(-1px, 1px) rotate(-1deg); }
+    60% { -webkit-transform: translate(-1px, 1px) rotate(0deg); }
+    70% { -webkit-transform: translate(1px, 1px) rotate(-1deg); }
+    80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+    90% { -webkit-transform: translate(1px, 1px) rotate(0deg); }
+    100% { -webkit-transform: translate(1px, -1px) rotate(-1deg); }
+}
 </style>

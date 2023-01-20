@@ -30,7 +30,7 @@
         return prev;
     }, { active: 0, sum: 0, activeSum: 0 } )
 
-    function toggleAll() {
+    function toggleDice() {
         if (totalDice.active == diceData.length) {
             diceData.forEach( d => d.active = false );
         }
@@ -40,11 +40,15 @@
         diceData = diceData;
     }
 
-    function rollActive() {
-        diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
+    function rerollDice() {
+        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
+        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
     }
 
-    function removeActive() { diceData = diceData.filter( d => !d.active ); }
+    function removeDice() {
+        if (totalDice.active == 0) diceData = [];
+        else diceData = diceData.filter( d => !d.active );
+    }
 </script>
 
 
@@ -55,7 +59,7 @@
         {#each [2,4,6,8,10,12,20] as s}
             <button type="button" class="die-slot" on:click={()=>addDie(s)}
                 style="background: url('/img/dice/d{s}-outline.svg') no-repeat left top;">
-                {#if (totalDice[s] ?? 0) == 0} 0d{s}
+                {#if (totalDice[s] ?? 0) == 0} d{s}
                 {:else if (totalDice[s] > 9)} {totalDice[s]}
                 {:else} {totalDice[s]}d{s}
                 {/if}
@@ -63,7 +67,7 @@
         {/each}
         <button type="button" class="die-slot" on:click={()=>addDie(-1)}
             style="background: url('/img/dice/dF-outline.svg') no-repeat left top;">
-            {#if (totalDice[-1] ?? 0) == 0} 0dF
+            {#if (totalDice[-1] ?? 0) == 0} dF
             {:else if (totalDice[-1] > 9)} {totalDice[-1]}
             {:else} {totalDice[-1]}dF
             {/if}
@@ -71,9 +75,9 @@
     </div>
 
     <div style="display: grid; grid-template-columns: 32% 32% 32%; justify-content: center;">
-        <button class="button-outlined" disabled={totalDice.active <= 0} on:click={removeActive}> Remove {totalDice.active} </button>
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={toggleAll}> {totalDice.active == diceData.length ? "Clear Selection" : "Select All"} </button>
-        <button class="button-outlined" disabled={totalDice.active <= 0} on:click={rollActive}> Reroll {totalDice.active} </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeDice}> {totalDice.active == 0 ? "Clear All" : "Remove " + String(totalDice.active) } </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={toggleDice}> {totalDice.active == diceData.length ? "Select None" : "Select All"} </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
     </div>
     
     <div class="dice-box">
@@ -140,9 +144,13 @@
 
 .die-slot {
     display: inline-flex;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     background-color: transparent;
     color: rgb(210, 210, 210);
     font-size: 16px;
+    text-align: center;
     width: 64px;
     height: 64px;
     align-items: center;
