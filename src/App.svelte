@@ -2,7 +2,6 @@
   import { Router, Link, Route } from 'svelte-routing'
   import Home from './routes/Home.svelte'
   import Dice from './routes/dice/Dice.svelte'
-  import EyeRoller from './routes/eyeroller/Eyeroller.svelte'
 
   export let url :string = ""
 </script>
@@ -12,12 +11,10 @@
     <nav>
       <Link to="/">Home</Link>
       <Link to="dice">Dice</Link>
-      <Link to="eyeroller">Eye Roller</Link>
     </nav>
     <div class="page">
       <Route path="/" component={Home} />
       <Route path="dice" component={Dice} />
-      <Route path="eyeroller" component={EyeRoller} />
     </div>
   </Router>
 
