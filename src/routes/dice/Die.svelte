@@ -32,7 +32,8 @@
     $: result = _roll()
 </script>
 
-<button bind:this={die} type="button" class="die" class:active={active} on:click={() => {active = !active}}>
+<button bind:this={die} type="button" class="die" class:active={active} on:click={() => {active = !active}}
+    style="background: url('/img/dice/d{sides == -1 ? "F" : sides}.svg') no-repeat left top;">
     {#if sides > 0}
         {result}
     {:else if sides == -1}
@@ -54,6 +55,8 @@
         padding: 5px;
         align-items: center;
         justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
         animation-name: shake;
         animation-duration: 0.2s;
         transform-origin: 50% 50%;

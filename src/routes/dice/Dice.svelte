@@ -12,51 +12,68 @@
             result: 0,
             active: false
         })
-        updateResults();
     }
-    function removeAll() { diceData = []; updateResults(); }
-    function removeActive() { diceData = diceData.filter( d => !d.active ); updateResults(); }
     // Handle die removal with null scan
 	$: diceComps = diceComps.filter( c => c );
 
 
     // Aggregate the current selection whenever it changes
-    let totalDice = { active: 0 }
+    let totalDice = { active: 0, sum: 0, activeSum: 0 }
     $: totalDice = diceData.reduce( (prev,curr) => {
         if (prev.hasOwnProperty( curr.sides )) prev[curr.sides] = prev[curr.sides] + 1;
         else prev[curr.sides] = 1;
-        if (curr.active) prev.active = prev.active +1;
+        prev.sum += curr.result;
+        if (curr.active) {
+            prev.active = prev.active +1;
+            prev.activeSum += curr.result;
+        }
         return prev;
-    }, { active: 0 } )
+    }, { active: 0, sum: 0, activeSum: 0 } )
 
-    let rollSum :number = 0;
-    function updateResults() {
-        rollSum = diceData.reduce( (prev,curr) => {
-            return prev + curr.result ?? 0;
-        }, 0 );
-    }
-
-    function rollAll() {
-        diceComps.filter( d => d ).forEach( d => d.roll() )
-        updateResults();
+    function toggleAll() {
+        if (totalDice.active == diceData.length) {
+            diceData.forEach( d => d.active = false );
+        }
+        else {
+            diceData.forEach( d => d.active = true );
+        }
+        diceData = diceData;
     }
 
     function rollActive() {
         diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
-        updateResults();
     }
+
+    function removeActive() { diceData = diceData.filter( d => !d.active ); }
 </script>
 
 
 <div class="content-box">
     <h1>Dice Roller</h1>
-    <p>Note: Work in progress. Will look prettier eventually.</p>
     
     <div class="dice-box">
         {#each [2,4,6,8,10,12,20] as s}
-            <button type="button" class="button-outlined die d{s}-slot" on:click={()=>addDie(s)}> {totalDice[s] ?? 0}d{s} </button>
+            <button type="button" class="die-slot" on:click={()=>addDie(s)}
+                style="background: url('/img/dice/d{s}-outline.svg') no-repeat left top;">
+                {#if (totalDice[s] ?? 0) == 0} 0d{s}
+                {:else if (totalDice[s] > 9)} {totalDice[s]}
+                {:else} {totalDice[s]}d{s}
+                {/if}
+            </button>
         {/each}
-        <button type="button" class="button-outlined die dF-slot" on:click={()=>addDie(-1)}> {totalDice[-1] ?? 0}dF </button>
+        <button type="button" class="die-slot" on:click={()=>addDie(-1)}
+            style="background: url('/img/dice/dF-outline.svg') no-repeat left top;">
+            {#if (totalDice[-1] ?? 0) == 0} 0dF
+            {:else if (totalDice[-1] > 9)} {totalDice[-1]}
+            {:else} {totalDice[-1]}dF
+            {/if}
+        </button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 32% 32% 32%; justify-content: center;">
+        <button class="button-outlined" disabled={totalDice.active <= 0} on:click={removeActive}> Remove {totalDice.active} </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={toggleAll}> {totalDice.active == diceData.length ? "Clear Selection" : "Select All"} </button>
+        <button class="button-outlined" disabled={totalDice.active <= 0} on:click={rollActive}> Reroll {totalDice.active} </button>
     </div>
     
     <div class="dice-box">
@@ -65,27 +82,31 @@
         {/each}
     </div>
 
-    <div class="d-flex justify-content-center mb-4">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rollAll}> Reroll All </button>
-        <button class="button-outlined" disabled={(totalDice.active ?? 0) <= 0} on:click={rollActive}> Reroll {totalDice.active ?? 0} </button>
-    </div>
-    <div class="d-flex justify-content-center mb-4">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeAll}> Remove All </button>
-        <button class="button-outlined" disabled={(totalDice.active ?? 0) <= 0} on:click={removeActive}> Remove {totalDice.active ?? 0} </button>
-    </div>
-
-    <h2 class="text-center"> Total: {rollSum} </h2>
-    <h3 class="text-center"> With Modifiers: </h3>
+    <h2 class="text-center" style="margin-bottom:0;">
+        {#if totalDice.active == 0}
+        Total Sum
+        {:else}
+        Selection Sum
+        {/if}
+    </h2>
+    <h3 class="result" style="width: 200px; margin: 0 auto 0 auto;">
+        {#if totalDice.active == 0}
+          {totalDice.sum}
+        {:else}
+          {totalDice.activeSum}
+        {/if}
+    </h3>
+    <h3 class="text-center" style="margin: 10px auto 2px auto;"> Modifiers </h3>
     <div class="result-grid-c2">
         {#each {length: 5} as _, i}
-            <h4 class="result-label">{-i-1}</h4>  <h4 class="result">{rollSum-i-1}</h4>
-            <h4 class="result-label">+{i+1}</h4>  <h4 class="result">{rollSum+i+1}</h4>
+            <h4 class="result-label">{-i-1}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)-i-1}</h4>
+            <h4 class="result-label">+{i+1}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)+i+1}</h4>
         {/each}
     </div>
     <div class="result-grid-c2">
         {#each {length: 5} as _, i}
-            <h4 class="result-label">{-i-6}</h4>  <h4 class="result">{rollSum-i-6}</h4>
-            <h4 class="result-label">+{i+6}</h4>  <h4 class="result">{rollSum+i+6}</h4>
+            <h4 class="result-label">{-i-6}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)-i-6}</h4>
+            <h4 class="result-label">+{i+6}</h4>  <h4 class="result">{(totalDice.sum == totalDice.activeSum ? totalDice.sum : totalDice.activeSum)+i+6}</h4>
         {/each}
     </div>
 </div>
@@ -117,9 +138,15 @@
     margin: 10px;
 }
 
-.die {
-    width: 50px;
-    height: 50px;
+.die-slot {
+    display: inline-flex;
+    background-color: transparent;
+    color: rgb(210, 210, 210);
+    font-size: 16px;
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
 }
 
 .result-grid-c2 {
@@ -130,7 +157,7 @@
 
 .result-label {
     color: rgba(204, 204, 204, 0.59);
-    min-width: 2.5em;
+    width: 2.5em;
     margin: 0;
     padding: 0;
     border: 1px solid rgba(204, 204, 204, 0.59);
@@ -138,7 +165,7 @@
 }
 .result {
     color: rgb(204, 204, 204);
-    min-width: 3.2em;
+    width: 4.2em;
     margin: 0;
     padding: 0;
     border: 1px solid rgb(204, 204, 204);
