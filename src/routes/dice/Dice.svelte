@@ -58,7 +58,7 @@
     <div class="dice-box">
         {#each [2,4,6,8,10,12,20] as s}
             <button type="button" class="die-slot" on:click={()=>addDie(s)}
-                style="background: url('/img/dice/d{s}-outline.svg') no-repeat left top;">
+                style="background: url('/img/dice/d{s}-outline.svg') no-repeat center;">
                 {#if (totalDice[s] ?? 0) == 0} d{s}
                 {:else if (totalDice[s] > 9)} {totalDice[s]}
                 {:else} {totalDice[s]}d{s}
@@ -66,7 +66,7 @@
             </button>
         {/each}
         <button type="button" class="die-slot" on:click={()=>addDie(-1)}
-            style="background: url('/img/dice/dF-outline.svg') no-repeat left top;">
+            style="background: url('/img/dice/dF-outline.svg') no-repeat center;">
             {#if (totalDice[-1] ?? 0) == 0} dF
             {:else if (totalDice[-1] > 9)} {totalDice[-1]}
             {:else} {totalDice[-1]}dF
@@ -144,17 +144,17 @@
 
 .die-slot {
     display: inline-flex;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-color: transparent;
     color: rgb(210, 210, 210);
-    font-size: 16px;
-    text-align: center;
     width: 64px;
     height: 64px;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
     align-items: center;
     justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .result-grid-c2 {

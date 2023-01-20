@@ -33,7 +33,7 @@
 </script>
 
 <button bind:this={die} type="button" class="die" class:active={active} on:click={() => {active = !active}}
-    style="background: url('/img/dice/d{sides == -1 ? "F" : sides}.svg') no-repeat left top;">
+    style="background: url('/img/dice/d{sides == -1 ? "F" : sides}.svg') no-repeat center;">
     {#if sides > 0}
         {result}
     {:else if sides == -1}
@@ -46,20 +46,17 @@
 <style>
 .die {
     display: inline-flex;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-color: transparent;
     color: black;
     width: 64px;
     height: 64px;
-    border-radius: 10%;
-    margin: 5px;
-    padding: 5px;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
     align-items: center;
     justify-content: center;
     font-size: 18px;
     font-weight: bold;
+    text-align: center;
     animation-name: shake;
     animation-duration: 0.2s;
     transform-origin: 50% 50%;
