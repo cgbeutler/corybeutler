@@ -17,6 +17,30 @@
   -webkit-text-size-adjust: 100%;
 }
 
+body {
+  display: flex;
+  place-items: top;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#app {
+  max-width: 550pt;
+  width: 84%;
+  margin: 0px auto;
+  padding: 0;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 a {
   font-weight: 500;
   color: aqua;
@@ -26,32 +50,75 @@ a:hover {
   color: #535bf2;
 }
 a:visited {
-  color: plum;
+  color: #dda0dd;
 }
 
-body {
-  display: flex;
-  place-items: top;
-  min-width: 320px;
-  min-height: 100vh;
+h1 {
+  font-size: xx-large;
+  line-height: 1em;
+  text-align: center;
+  margin: 10px;
+}
+h1 + h2 {
+  font-size: 15pt;
+  margin-top: 0;
+  text-align: center;
 }
 
+
+#home-button {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: #000000cc;
+  border: 3pt solid rgba(0, 0, 0, 0);
+  border-radius: 1em;
+  text-decoration: none;
+  padding: 0;
+}
+
+#home-button>img {
+  display: block;
+  position: relative;
+  width: 0.9em;
+  height: 0.8em;
+  margin: 0;
+  padding: 0 0 0.1em 0;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  filter: invert(87%) sepia(54%) saturate(4575%) hue-rotate(100deg) brightness(100%) contrast(102%);
+}
 
 nav {
-  margin: 0px auto 0pt auto;
-  padding: 0px;
-  align-content: left;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: left;
+  gap: 8px;
   text-align: left;
 }
 
 nav>a {
   background-color: #000000cc;
-  display: inline-block;
+  display: inline-flex;
+  height: 1em;
+  line-height: 1em;
+  margin: 8px 0 0 0;
   border: 3pt solid rgba(0, 0, 0, 0);
   border-radius: 5px;
+  padding: 0 0.6em;
   text-decoration: none;
-  padding: 0 1em;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
+
+nav>a.active {
+  transform: skew(-16deg);
+}
+
 
 .ext-nav {
   background-color: #000000cc;
@@ -73,26 +140,6 @@ nav>a {
   height: 14pt;
 }
 
-
-h1 {
-  font-size: xx-large;
-  line-height: 1em;
-  text-align: center;
-  margin: 10px;
-}
-h1 + h2 {
-  font-size: 15pt;
-  margin-top: 0;
-  text-align: center;
-}
-
-#app {
-  max-width: 550pt;
-  width: 80%;
-  margin: 0px auto;
-  padding: 0;
-  text-align: center;
-}
 
 .page {
   background-color: #000000;

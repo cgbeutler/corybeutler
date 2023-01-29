@@ -52,7 +52,7 @@
 </script>
 
 
-<div class="content-box">
+<div class="page">
     <h1>Dice Roller</h1>
     
     <div class="dice-box">
