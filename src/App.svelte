@@ -1,25 +1,10 @@
 <script lang="ts">
   import { Router, Link, link, Route } from 'svelte-routing';
-  // import Link from './lib/Link.svelte';
   import Home from "./routes/Home.svelte";
   import Dice from "./routes/dice/Dice.svelte";
   import HnS from './routes/hns/HnS.svelte';
   import CharSheet from './routes/hns/char-sheet/CharSheet.svelte';
 
-
-  // function navLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
-  //   if (href === "/") return isCurrent ? { class: "hidden" } : {};
-  //   if (isPartiallyCurrent || isCurrent) return { class: "active" };
-
-  //   let pathname = location.pathname;
-  //   if (pathname[pathname.length-1] === "/") pathname = pathname.slice(0,-1);
-  //   let locCount, hrefCount;
-  //   for(var i = locCount = 0; i < pathname.length; locCount += +("/" === pathname[i++]));
-  //   for(var i = hrefCount = 0; i < href.length; hrefCount += +("/" === href[i++]));
-  //   if (hrefCount - locCount > 1) return { class: "hidden" };
-  //   if (!href.startsWith(pathname)) return { class: "hidden" }
-  //   return {};
-  // }
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
     if (isPartiallyCurrent || isCurrent) return { class: "active" };
@@ -52,6 +37,7 @@
     <!-- <Link to="hns" getProps={forwardLinkGetProps}>HnS</Link> -->
     <Link to="hns/charsheet" getProps={forwardLinkGetProps}>Character Sheet</Link>
   </nav>
+  
   <Route component={Home} />
   <Route path="dice" component={Dice} />
   <Route path="hns" component={HnS} />
