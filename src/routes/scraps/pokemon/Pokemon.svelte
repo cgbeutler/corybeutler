@@ -105,20 +105,22 @@
 
 <div class="page">
     <h1>Pokemon GO Coordinator</h1>
-    <p>
+    <p class="small-txt">
         Note: This page uses pogoapi.net to fetch info. If that gets out of date, ditto and release info may be wrong.<br/>
     </p>
     <hr/>
-    <h3>Cory</h3>
-    Wants Shiny Dittos, which currently may be:<br/>
-    {#each dittos as ditto}
-        <span>{ditto.name}</span> &nbsp;
-    {/each}
+    <h3 style="margin-bottom: 0;">Cory</h3>
+    <p class="small-txt" style="margin-top: 0.2em;">Wants Shiny Dittos.<br/>They may currently may be:</p>
+    <div>
+        {#each dittos as ditto}
+            <span>{ditto.name}</span> &nbsp;
+        {/each}
+    </div>
     <br/>
     <hr/>
-    <h3>Michael</h3>
-    Wants a living lucky flush. See if you got what he needs:<br/>(Search does not indicate variant.)<br/>
-    <input bind:value={michTerm} on:change={michSearch}> <button class="small-btn" on:click={michSearch}>Search</button><br/>
+    <h3 style="margin-bottom: 0;">Michael</h3>
+    <p class="small-txt" style="margin-top: 0.2em;">Wants a living lucky flush.<br/>See if you got what he needs:<br/>(Search does not indicate variant.)</p>
+    <input bind:value={michTerm} on:change={michSearch}> <button class="button-outlined" on:click={michSearch}>Search</button><br/>
     {#if michError && michError.length != 0}
         Error: {michError}
     {/if}
@@ -132,10 +134,11 @@
 </div>
 
 <style>
-.small-btn {
-    padding: 4px 8px;
-}
 .gray {
     color: gray
+}
+.small-txt {
+    font-size: small;
+    line-height: 1.2em;
 }
 </style>
