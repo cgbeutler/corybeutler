@@ -4,6 +4,10 @@
   import Dice from "./routes/dice/Dice.svelte";
   import HnS from './routes/hns/HnS.svelte';
   import CharSheet from './routes/hns/char-sheet/CharSheet.svelte';
+  // Scraps
+  import Scraps from './routes/scraps/Scraps.svelte';
+  import Groceries from './routes/scraps/groceries/Groceries.svelte';
+  import Pokemon from './routes/scraps/pokemon/Pokemon.svelte';
 
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
@@ -31,34 +35,27 @@
     <Link to="dice" getProps={backLinkGetProps}>Dice</Link>
     <Link to="hns" getProps={backLinkGetProps}>HnS</Link>
     <Link to="hns/charsheet" getProps={backLinkGetProps}>Character Sheet</Link>
+    <!--Scraps-->
+    <Link to="scraps" getProps={backLinkGetProps}>Scraps</Link>
+    <Link to="scraps/groceries" getProps={backLinkGetProps}>Groceries</Link>
+    <Link to="scraps/pokemon" getProps={backLinkGetProps}>Pokemon</Link>
   </nav>
   <nav>
     <Link to="dice" getProps={forwardLinkGetProps}>Dice</Link>
     <!-- <Link to="hns" getProps={forwardLinkGetProps}>HnS</Link> -->
     <Link to="hns/charsheet" getProps={forwardLinkGetProps}>Character Sheet</Link>
+    <Link to="scraps" getProps={forwardLinkGetProps}>Scraps</Link>
   </nav>
   
   <Route component={Home} />
   <Route path="dice" component={Dice} />
   <Route path="hns" component={HnS} />
   <Route path="hns/charsheet" component={CharSheet} />
+  <!--Scraps-->
+  <Route path="scraps" component={Scraps} />
+  <Route path="scraps/groceries" component={Groceries} />
+  <Route path="scraps/pokemon" component={Pokemon} />
 </Router>
-
-
-<!-- External links at the bottom -->
-<div class="ext-nav">
-  <span style="margin: 0pt 10pt"> You can also find me on:</span>
-  <a href="https://aristonaut.itch.io/">
-    <img src="/img/itchio_logo.svg" alt="aristonaut.itch.io">
-  </a>
-  <a href="https://m.soundcloud.com/aristonaut">
-    <img src="/img/soundcloud_logo.png" alt="m.soundcloud.com/aristonaut">
-  </a>
-  <a href="https://github.com/cgbeutler">
-    <img src="/img/github_logo.png" alt="github.com/cgbeutler">
-  </a>
-</div>
-
 
 <style>
 </style>

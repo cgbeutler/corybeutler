@@ -6,6 +6,11 @@ Migrate to SvelteKit if you need a little more server-side power or speed.
 
 ## Run or Build
 
+If this is a fresh repo, first run
+```sh
+npm install
+```
+
 Run a hot-reloading dev environment with:
 ```sh
 npm run dev

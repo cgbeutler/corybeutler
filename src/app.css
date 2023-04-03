@@ -180,6 +180,29 @@ button:focus-visible {
 }
 
 
+.button-outlined {
+  display: inline-flex;
+  background-color: transparent;
+  color: rgb(204, 204, 204);
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 8px;
+  margin: 5px;
+  padding: 5px 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-outlined:disabled {
+  color: rgba(204, 204, 204, 0.59);
+  border: 2px solid rgba(204, 204, 204, 0.59);
+}
+
+.button-outlined:visited {
+  color: rgb(204, 204, 204);
+  border: 2px solid rgb(204, 204, 204);
+}
+
+
 
 body .gist .highlight {
   background: #161616;

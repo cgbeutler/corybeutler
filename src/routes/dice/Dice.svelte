@@ -116,7 +116,7 @@
 </div>
 
 <style>
-
+/* 
 .button-outlined {
     display: inline-flex;
     background-color: transparent;
@@ -132,7 +132,7 @@
 .button-outlined:disabled {
     color: rgba(204, 204, 204, 0.59);
     border: 2px solid rgba(204, 204, 204, 0.59);
-}
+} */
 
 .dice-box {
     display: flex;
