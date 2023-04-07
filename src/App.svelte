@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Router, Link, link, Route } from 'svelte-routing';
+  import NotFound from './routes/NotFound.svelte';
   import Home from "./routes/Home.svelte";
   import Dice from "./routes/dice/Dice.svelte";
   import HnS from './routes/hns/HnS.svelte';
@@ -47,7 +48,8 @@
     <Link to="scraps" getProps={forwardLinkGetProps}>Scraps</Link>
   </nav>
   
-  <Route component={Home} />
+  <Route component="{NotFound}" />
+  <Route path="/" component={Home} />
   <Route path="dice" component={Dice} />
   <Route path="hns" component={HnS} />
   <Route path="hns/charsheet" component={CharSheet} />
@@ -56,6 +58,3 @@
   <Route path="scraps/groceries" component={Groceries} />
   <Route path="scraps/pokemon" component={Pokemon} />
 </Router>
-
-<style>
-</style>
