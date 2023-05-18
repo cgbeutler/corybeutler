@@ -3,7 +3,8 @@
   import NotFound from './routes/NotFound.svelte';
   import Home from "./routes/Home.svelte";
   import Dice from "./routes/dice/Dice.svelte";
-  import AgeRoller from "./routes/dice/age/AgeRoller.svelte";
+  import AgeRoller from "./routes/dice/ageroller/AgeRoller.svelte";
+  import EyeRoller from "./routes/dice/eyeroller/EyeRoller.svelte";
   import HnS from './routes/hns/HnS.svelte';
   import CharSheet from './routes/hns/char-sheet/CharSheet.svelte';
   // Scraps
@@ -35,7 +36,8 @@
   <nav>
     <Link to="/" id="home-button" getProps={backLinkGetProps}><img src="/img/home.svg" alt="H" /></Link>
     <Link to="dice" getProps={backLinkGetProps}>Dice</Link>
-    <Link to="dice/age" getProps={backLinkGetProps}>Age Roller</Link>
+    <Link to="dice/ageroller" getProps={backLinkGetProps}>Age Roller</Link>
+    <Link to="dice/eyeroller" getProps={backLinkGetProps}>Eye Roller</Link>
     <Link to="hns" getProps={backLinkGetProps}>HnS</Link>
     <Link to="hns/charsheet" getProps={backLinkGetProps}>Character Sheet</Link>
     <!--Scraps-->
@@ -45,7 +47,8 @@
   </nav>
   <nav>
     <Link to="dice" getProps={forwardLinkGetProps}>Dice</Link>
-    <Link to="dice/age" getProps={forwardLinkGetProps}>Age Roller</Link>
+    <Link to="dice/ageroller" getProps={forwardLinkGetProps}>Age Roller</Link>
+    <Link to="dice/eyeroller" getProps={forwardLinkGetProps}>Eye Roller</Link>
     <!-- <Link to="hns" getProps={forwardLinkGetProps}>HnS</Link> -->
     <Link to="hns/charsheet" getProps={forwardLinkGetProps}>Character Sheet</Link>
     <Link to="scraps" getProps={forwardLinkGetProps}>Scraps</Link>
@@ -54,7 +57,8 @@
   <Route component="{NotFound}" />
   <Route path="/" component={Home} />
   <Route path="dice" component={Dice} />
-  <Route path="dice/age" component={AgeRoller} />
+  <Route path="dice/ageroller" component={AgeRoller} />
+  <Route path="dice/eyeroller" component={EyeRoller} />
   <Route path="hns" component={HnS} />
   <Route path="hns/charsheet" component={CharSheet} />
   <!--Scraps-->

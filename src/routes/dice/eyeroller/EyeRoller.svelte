@@ -1,0 +1,156 @@
+<script lang="ts">
+    import type { SvelteComponent } from 'svelte';
+    import Die from './Die.svelte'
+
+    let nextId = 0
+    let diceData :Array<{id :number, result :number, active :boolean}> = []
+    let diceComps :Array<SvelteComponent> = []
+    function addDie() {
+        diceData = diceData.concat({
+            id: nextId++,
+            result: 0,
+            active: false
+        })
+    }
+    // Handle die removal with null scan
+	$: diceComps = diceComps.filter( c => c );
+
+
+    // Aggregate the current selection whenever it changes
+    let totalDice = { active: 0, snakes: 0, bats: 0, fish: 0, rings: 0, pips: 0 }
+    $: totalDice = diceData.reduce( (agg, die) => {
+        if (die.active) { agg.active += 1; }
+        if (die.result == 1) { agg.snakes += 1; agg.pips += 1; }
+        else if (die.result == 2) { agg.bats += 1; agg.rings += 1; }
+        else if (die.result == 3) { agg.fish += 1; agg.pips += 1; agg.rings += 1; }
+        return agg;
+    }, { active: 0, snakes: 0, bats: 0, fish: 0, rings: 0, pips: 0 } )
+
+    function toggleDice() {
+        if (totalDice.active == diceData.length) {
+            diceData.forEach( d => d.active = false );
+        }
+        else {
+            diceData.forEach( d => d.active = true );
+        }
+        diceData = diceData;
+    }
+
+    function rerollDice() {
+        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
+        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
+    }
+
+    function removeDice() {
+        if (totalDice.active == 0) diceData = [];
+        else diceData = diceData.filter( d => !d.active );
+    }
+
+
+    function buildResultText( dice ) :string {
+        var parts = [];
+        if (dice.snakes > 0) { parts.push( `${dice.snakes}\xa0snake${dice.snakes == 1? "":"s"}` ); }
+        if (dice.fish > 0) { parts.push( `${dice.fish}\xa0fish` ); }
+        if (dice.bats > 0) { parts.push( `${dice.bats}\xa0bat${dice.bats == 1? "":"s"}` ); }
+        var whole = [ parts.join( "\xa0\xa0" ) ];
+        parts = [];
+        if (dice.pips > 0) { parts.push( `${dice.pips}\xa0pip${dice.pips == 1? "":"s"}` ); }
+        if (dice.rings > 0) { parts.push( `${dice.rings}\xa0ring${dice.rings == 1? "":"s"}` ); }
+        whole.push( parts.join( "\xa0\xa0" ) );
+        return whole.join( "\r\n" );
+    }
+
+    let resultText :string = "";
+    $: resultText = buildResultText( totalDice );
+
+</script>
+
+<div class="page">
+    <div class="content-box">
+        <h1>Eye Roller</h1>
+
+        <button class="button-outlined" on:click={()=>addDie()}>
+            {#if diceData.length == 0} Add 1dE
+            {:else} Add to {diceData.length}dE
+            {/if}
+        </button>
+
+        <div style="display: grid; grid-template-columns: 32% 32% 32%; justify-content: center;">
+            <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeDice}> {totalDice.active == 0 ? "Clear All" : "Remove " + String(totalDice.active) } </button>
+            <button class="button-outlined" disabled={diceData.length <= 0} on:click={toggleDice}> {totalDice.active == diceData.length ? "Select None" : "Select All"} </button>
+            <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
+        </div>
+
+        <div class="dice-box">
+            {#each diceData as die, i (die.id)}
+                <Die bind:this={diceComps[i]} bind:result={die.result} bind:active={die.active} />
+            {/each}
+        </div>
+
+
+        <div class="text-center" style="font-size: small; white-space: pre;" id="result-view"> {resultText} </div>
+    </div>
+</div>
+
+<div class="page">
+    <div class="content-box">
+        <h2>What are Eye Dice?</h2>
+        <p>
+        Eye dice are 6-sided dice that have one circle side, two pip sides, and three pip-in-circle sides.
+        </p>
+
+        <div class="die-diagram">
+            <div></div>
+            <Die result={2} active={false} enabled={false} />
+            <div></div>
+            <div></div>
+            <Die result={3} active={false} enabled={false} />
+            <Die result={1} active={false} enabled={false} />
+            <Die result={3} active={false} enabled={false} />
+            <Die result={3} active={false} enabled={false} />
+            <div></div>
+            <Die result={2} active={false} enabled={false} />
+            <div></div>
+            <div></div>
+        </div>
+        <p>
+        Each side type can be referred to individually or in groups.<br>
+        This allows for different stats using the same set of dice:
+        </p>
+        
+        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
+            <Die result={1} active={false} enabled={false} /> &nbsp;&frac16; Snake
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
+            <Die result={2} active={false} enabled={false} /> &nbsp;&frac13; Bat
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
+            <Die result={3} active={false} enabled={false} /> &nbsp;&frac12; Fish
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
+            <Die result={1} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /> &nbsp;&frac23; Pips
+        </div>
+        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
+            <Die result={2} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /> &nbsp;&frac56; Rings
+        </div>
+
+        <p>Rolling multiple eye dice for the same thing multiplies that fraction by itself number-of-dice times. For example, rolling 2dE for fish gives you a 50% * 50% = 25% chance of rolling all fish.</p>
+    </div>
+</div>
+
+<style>
+.die-diagram {
+    display: grid;
+    margin: auto;
+    padding: auto;
+    grid-template-columns: 60px 60px 60px 60px;
+    justify-content: center;
+}
+.die-diagram div {
+    display: inline-block;
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    margin: 5px;
+}
+</style>

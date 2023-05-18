@@ -1,22 +1,47 @@
 <script lang="ts">
-    export let state = "blank"
-    export let active = false
+    export let result :number = 0
+    export let active :boolean = false
+    export let enabled :boolean = true
 
     let die
 
-    function restartAnimation() {
+    function _roll() {
+        var sixes = Math.floor( Math.random() * 6 ) + 1;
+        if (sixes == 1) return 1
+        if (sixes == 2) return 2
+        if (sixes == 3) return 2
+        if (sixes == 4) return 3
+        if (sixes == 5) return 3
+        if (sixes == 6) return 3
+    }
+    function _restartAnimation() {
+        if (!die) return;
         die.style.animation = 'none';
         die.offsetHeight;
         die.style.animation = null;
     }
-    $: { state; restartAnimation(); }
+
+    export function roll() {
+        if (!enabled) return;
+        result = _roll();
+        active = false;
+        _restartAnimation();
+    }
+    export function rollIfActive() {
+        if (!active || !enabled) return;
+        result = _roll();
+        active = false;
+        _restartAnimation();
+    }
+
+    $: result = enabled ? _roll() : result
 </script>
 
-<button bind:this={die} type="button" class="die" class:die-slot={state === ""} class:active={active} on:click={() => {state = state !== "" ? state : "blank"; active = !active}}>
-    {#if state !== ""}
-    <span class="{state}-eye"></span>
+<button bind:this={die} type="button" class="die" class:die-slot={result == 0} class:active={active} on:click={() => {active = !enabled ? false : !active}}>
+    {#if result == 0}
+    ?
     {:else}
-    +
+    <span class="{result == 1 ? "snake" : result == 2 ? "bat" : "fish"}-eye"></span>
     {/if}
 </button>
 
