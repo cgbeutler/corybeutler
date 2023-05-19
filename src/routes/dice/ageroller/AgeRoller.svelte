@@ -57,7 +57,7 @@
             <h2 class="text-center" style="margin-bottom:0;">
                 Sum
             </h2>
-            <h3 class="result" style="width: 150px; margin: 0 auto 0 auto;">
+            <h3 class="result" style="width: 128px; margin: 0 auto 0 auto;">
                 {totalDice.sum}
             </h3>
         </div>
@@ -96,7 +96,7 @@
     </div>
 
 
-    <p>Check out Fantasy Age and the other Age RPGs by <a href="https://greenronin.com/">Green Ronin</a>.</p>
+    <p>Check out Fantasy Age and the other Age RPGs by <a href="https://greenronin.com/">Green&nbsp;Ronin</a>&nbsp;(Not&nbsp;affiliated)</p>
 
 </div>
 
@@ -113,12 +113,14 @@
 .result-summary {
     display: grid;
     margin: 1em 0 1em 0;
-    grid-template-columns: auto auto;
+    grid-template-columns: 190px 150px;
+    justify-content: center;
 }
 .result-mod {
     display: grid;
     margin: 1em 0 1em 0;
-    grid-template-columns: 1em auto 1em auto;
+    grid-template-columns: 1em 150px 1em 150px;
+    justify-content: center;
 }
 
 .result {

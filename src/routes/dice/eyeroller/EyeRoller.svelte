@@ -49,13 +49,13 @@
 
     function buildResultText( dice ) :string {
         var parts = [];
-        if (dice.snakes > 0) { parts.push( `${dice.snakes}\xa0snake${dice.snakes == 1? "":"s"}` ); }
-        if (dice.fish > 0) { parts.push( `${dice.fish}\xa0fish` ); }
-        if (dice.bats > 0) { parts.push( `${dice.bats}\xa0bat${dice.bats == 1? "":"s"}` ); }
+        parts.push( `${dice.snakes}\xa0snake${dice.snakes == 1? "":"s"}` );
+        parts.push( `${dice.bats}\xa0bat${dice.bats == 1? "":"s"}` );
+        parts.push( `${dice.fish}\xa0fish` );
         var whole = [ parts.join( "\xa0\xa0" ) ];
         parts = [];
-        if (dice.pips > 0) { parts.push( `${dice.pips}\xa0pip${dice.pips == 1? "":"s"}` ); }
-        if (dice.rings > 0) { parts.push( `${dice.rings}\xa0ring${dice.rings == 1? "":"s"}` ); }
+        parts.push( `${dice.pips}\xa0pip${dice.pips == 1? "":"s"}` );
+        parts.push( `${dice.rings}\xa0ring${dice.rings == 1? "":"s"}` );
         whole.push( parts.join( "\xa0\xa0" ) );
         return whole.join( "\r\n" );
     }
@@ -114,24 +114,16 @@
             <div></div>
         </div>
         <p>
-        Each side type can be referred to individually or in groups.<br>
-        This allows for different stats using the same set of dice:
+        Each side type can be referred to individually or in groups, which each have their own, unique chances of occurring.<br><br>
+        The chances of each are:
         </p>
         
-        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
-            <Die result={1} active={false} enabled={false} /> &nbsp;&frac16; Snake
-        </div>
-        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
-            <Die result={2} active={false} enabled={false} /> &nbsp;&frac13; Bat
-        </div>
-        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
-            <Die result={3} active={false} enabled={false} /> &nbsp;&frac12; Fish
-        </div>
-        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
-            <Die result={1} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /> &nbsp;&frac23; Pips
-        </div>
-        <div style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; width: 212px; height: 50px; margin: 10px auto; padding: 0px">
-            <Die result={2} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /> &nbsp;&frac56; Rings
+        <div class="die-list">
+            <div><Die result={1} active={false} enabled={false} /></div> <div>&frac16; Snake</div>
+            <div><Die result={2} active={false} enabled={false} /></div> <div>&frac13; Bat</div>
+            <div><Die result={3} active={false} enabled={false} /></div> <div>&frac12; Fish</div>
+            <div><Die result={1} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /></div> <div>&frac23; Pips</div>
+            <div><Die result={2} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /></div> <div>&frac56; Rings</div>
         </div>
 
         <p>Rolling multiple eye dice for the same thing multiplies that fraction by itself number-of-dice times. For example, rolling 2dE for fish gives you a 50% * 50% = 25% chance of rolling all fish.</p>
@@ -143,14 +135,34 @@
     display: grid;
     margin: auto;
     padding: auto;
-    grid-template-columns: 60px 60px 60px 60px;
+    grid-template-columns: 48px 48px 48px 48px;
     justify-content: center;
 }
 .die-diagram div {
     display: inline-block;
-    width: 50px;
-    min-width: 50px;
-    height: 50px;
-    margin: 5px;
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    margin: 0px;
+}
+
+.die-list {
+    display: grid;
+    margin: auto;
+    padding: auto;
+    grid-template-columns: 144px 144px;
+    justify-content: center;
+}
+.die-list > div:nth-child(2n-1) {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 4px;
+}
+.die-list > div:nth-child(2n) {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 4px;
 }
 </style>

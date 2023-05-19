@@ -58,7 +58,7 @@
     <div class="dice-box">
         {#each [2,4,6,8,10,12,20] as s}
             <button type="button" class="die-slot" on:click={()=>addDie(s)}
-                style="background: url('/img/dice/d{s}-outline.svg') no-repeat center;">
+                style="background-image: url('/img/dice/d{s}-inverted.svg');">
                 {#if (totalDice[s] ?? 0) == 0} d{s}
                 {:else if (totalDice[s] > 9)} {totalDice[s]}
                 {:else} {totalDice[s]}d{s}
@@ -66,7 +66,7 @@
             </button>
         {/each}
         <button type="button" class="die-slot" on:click={()=>addDie(-1)}
-            style="background: url('/img/dice/dF-outline.svg') no-repeat center;">
+            style="background-image: url('/img/dice/dF-inverted.svg');">
             {#if (totalDice[-1] ?? 0) == 0} dF
             {:else if (totalDice[-1] > 9)} {totalDice[-1]}
             {:else} {totalDice[-1]}dF
@@ -144,6 +144,10 @@
 
 .die-slot {
     display: inline-flex;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     color: rgb(210, 210, 210);
     width: 64px;
     height: 64px;
