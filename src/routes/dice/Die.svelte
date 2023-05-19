@@ -33,13 +33,17 @@
 </script>
 
 <button bind:this={die} type="button" class="die" class:active={active} on:click={() => {active = !active}}
-    style="background-image: url('/img/dice/d{sides == -1 ? "F" : sides}.svg');">
+    style="background-image: url('/img/dice/d{
+        sides == -1 ?
+          result == -1 ? "F-minus"
+          : result == 1 ? "F-plus"
+          : "F"
+        : sides
+    }.svg');">
     {#if sides > 0}
         {result}
-    {:else if sides == -1}
-        {result == -1 ? "-" : result == 1 ? "+" : '\xa0'}
     {:else}
-        '\xa0'
+        &nbsp;
     {/if}
 </button>
 

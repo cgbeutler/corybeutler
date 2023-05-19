@@ -18,20 +18,24 @@
 
 
     // Aggregate the current selection whenever it changes
-    let totalDice = { active: 0, sum: 0, activeSum: 0 }
-    $: totalDice = diceData.reduce( (prev,curr) => {
-        if (prev.hasOwnProperty( curr.sides )) prev[curr.sides] = prev[curr.sides] + 1;
-        else prev[curr.sides] = 1;
-        prev.sum += curr.result;
-        if (curr.active) {
-            prev.active = prev.active +1;
-            prev.activeSum += curr.result;
+    let diceAgg = { active: 0, sum: 0, activeSum: 0, low: Infinity, high: -Infinity, activeLow: Infinity, activeHigh: -Infinity }
+    $: diceAgg = diceData.reduce( (agg, die) => {
+        if (agg.hasOwnProperty( die.sides )) agg[die.sides] = agg[die.sides] + 1;
+        else agg[die.sides] = 1;
+        agg.sum += die.result;
+        if (die.result < agg.low) agg.low = die.result;
+        if (die.result > agg.high) agg.high = die.result;
+        if (die.active) {
+            agg.active = agg.active +1;
+            agg.activeSum += die.result;
+            if (die.result < agg.activeLow) agg.activeLow = die.result;
+            if (die.result > agg.activeHigh) agg.activeHigh = die.result;
         }
-        return prev;
-    }, { active: 0, sum: 0, activeSum: 0 } )
+        return agg;
+    }, { active: 0, sum: 0, activeSum: 0, low: Infinity, high: -Infinity, activeLow: Infinity, activeHigh: -Infinity } )
 
     function toggleDice() {
-        if (totalDice.active == diceData.length) {
+        if (diceAgg.active == diceData.length) {
             diceData.forEach( d => d.active = false );
         }
         else {
@@ -41,43 +45,49 @@
     }
 
     function rerollDice() {
-        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
+        if (diceAgg.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
         else diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
     }
 
     function removeDice() {
-        if (totalDice.active == 0) diceData = [];
+        if (diceAgg.active == 0) diceData = [];
         else diceData = diceData.filter( d => !d.active );
     }
+
+    let modifier = 1
 </script>
 
 
 <div class="page">
     <h1>Dice Roller</h1>
     
-    <div class="dice-box">
+    <h3 style="margin-bottom:0;">ADD DICE</h3>
+    <hr class="underule">
+    <div class="dice-button-box">
         {#each [2,4,6,8,10,12,20] as s}
-            <button type="button" class="die-slot" on:click={()=>addDie(s)}
+            <button type="button" class="die-button" on:click={()=>addDie(s)}
                 style="background-image: url('/img/dice/d{s}-inverted.svg');">
-                {#if (totalDice[s] ?? 0) == 0} d{s}
-                {:else if (totalDice[s] > 9)} {totalDice[s]}
-                {:else} {totalDice[s]}d{s}
+                {#if (diceAgg[s] ?? 0) == 0} d{s}
+                {:else if (diceAgg[s] > 9)} {diceAgg[s]}
+                {:else} {diceAgg[s]}d{s}
                 {/if}
             </button>
         {/each}
-        <button type="button" class="die-slot" on:click={()=>addDie(-1)}
+        <button type="button" class="die-button" on:click={()=>addDie(-1)}
             style="background-image: url('/img/dice/dF-inverted.svg');">
-            {#if (totalDice[-1] ?? 0) == 0} dF
-            {:else if (totalDice[-1] > 9)} {totalDice[-1]}
-            {:else} {totalDice[-1]}dF
+            {#if (diceAgg[-1] ?? 0) == 0} dF
+            {:else if (diceAgg[-1] > 9)} {diceAgg[-1]}
+            {:else} {diceAgg[-1]}dF
             {/if}
         </button>
     </div>
+    
+    <div class="total-readout"><span>Total:&nbsp;{diceComps.length}</span> <span>Selected:&nbsp;{diceAgg.active}</span></div>
 
-    <div style="display: grid; grid-template-columns: 32% 32% 32%; justify-content: center;">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeDice}> {totalDice.active == 0 ? "Clear All" : "Remove " + String(totalDice.active) } </button>
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={toggleDice}> {totalDice.active == diceData.length ? "Select None" : "Select All"} </button>
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
+    <div class="operation-button-box">
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeDice}> {diceAgg.active == 0 ? "Clear All" : "Clear " + String(diceAgg.active) } </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={toggleDice}> {diceAgg.active == diceData.length ? "Select None" : "Select All"} </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {diceAgg.active == 0 ? "Reroll All" : "Reroll " + String(diceAgg.active) } </button>
     </div>
     
     <div class="dice-box">
@@ -86,63 +96,112 @@
         {/each}
     </div>
 
-    <h2 class="text-center" style="margin-bottom:0;">
-        {#if totalDice.active == 0}
-        Total Sum
-        {:else}
-        Selection Sum
-        {/if}
-    </h2>
-    <h3 class="result" style="width: 200px; margin: 0 auto 0 auto;">
-        {#if totalDice.active == 0}
-          {totalDice.sum}
-        {:else}
-          {totalDice.activeSum}
-        {/if}
-    </h3>
-    <h3 class="text-center" style="margin: 10px auto 2px auto;"> Modifiers </h3>
-    <div class="result-grid-c2">
-        {#each {length: 5} as _, i}
-            <h4 class="result-label">{-i-1}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)-i-1}</h4>
-            <h4 class="result-label">+{i+1}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)+i+1}</h4>
-        {/each}
+    <h3 style="margin-bottom:0;">{#if diceAgg.active == 0} SUMMARY {:else} SELECTION SUMMARY {/if}</h3>
+    <hr class="underule">
+    <div class="result-summary">
+        <div>
+            <h4 class="text-center" style="margin:0;"> SUM </h4>
+            <h3 class="result" style="width: 120px; margin: 0 auto 0 auto;">
+                {#if diceAgg.active == 0}
+                    {diceAgg.sum}
+                {:else}
+                    {diceAgg.activeSum}
+                {/if}
+            </h3>
+        </div>
+        <div class="result-summary">
+            <div>
+                <h4 class="text-center" style="margin:0;"> LOW </h4>
+                <h3 class="result" style="width: 120px; margin: 0 auto 0 auto;">
+                    {#if diceAgg.low != Infinity}
+                        {#if diceAgg.active == 0}
+                            {diceAgg.low}
+                        {:else}
+                            {diceAgg.activeLow}
+                        {/if}
+                    {:else}
+                        0
+                    {/if}
+                </h3>
+            </div>
+            <div>
+                <h4 class="text-center" style="margin:0;"> HIGH </h4>
+                <h3 class="result" style="width: 120px; margin: 0 auto 0 auto;">
+                    {#if diceAgg.low != Infinity}
+                        {#if diceAgg.active == 0}
+                            {diceAgg.high}
+                        {:else}
+                            {diceAgg.activeHigh}
+                        {/if}
+                    {:else}
+                        0
+                    {/if}
+                </h3>
+            </div>
+        </div>
     </div>
-    <div class="result-grid-c2">
-        {#each {length: 5} as _, i}
-            <h4 class="result-label">{-i-6}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)-i-6}</h4>
-            <h4 class="result-label">+{i+6}</h4>  <h4 class="result">{(totalDice.active == 0 ? totalDice.sum : totalDice.activeSum)+i+6}</h4>
-        {/each}
+
+    <h3 style="margin-top: 48px; margin-bottom:0;">MODIFIER</h3>
+    <hr class="underule">
+    <div class="result-modifier">
+        <input bind:value={modifier} class="modifier-input" type=number>
+        <input bind:value={modifier} class="modifier-range" type=range min=-15 max=15>
+    </div>
+
+    <div class="result-summary">
+        <div>
+            <h4 class="text-center" style="margin:0;"> SUM </h4>
+            <h3 class="result" style="width: 120px; margin: 0 auto 0 auto;">
+                {#if diceAgg.active == 0}
+                    {diceAgg.sum + modifier}
+                {:else}
+                    {diceAgg.activeSum + modifier}
+                {/if}
+            </h3>
+        </div>
+        <div class="result-summary">
+            <div>
+                <h4 class="text-center" style="margin:0;"> LOW </h4>
+                <h3 class="result" style="width: 120px; margin: 0 auto 0 auto;">
+                    {#if diceAgg.low != Infinity}
+                        {#if diceAgg.active == 0}
+                            {diceAgg.low + modifier}
+                        {:else}
+                            {diceAgg.activeLow + modifier}
+                        {/if}
+                    {:else}
+                        {modifier}
+                    {/if}
+                </h3>
+            </div>
+            <div>
+                <h4 class="text-center" style="margin:0;"> HIGH </h4>
+                <h3 class="result" style="width: 120px; margin: 0 auto 0 auto;">
+                    {#if diceAgg.low != Infinity}
+                        {#if diceAgg.active == 0}
+                            {diceAgg.high + modifier}
+                        {:else}
+                            {diceAgg.activeHigh + modifier}
+                        {/if}
+                    {:else}
+                        {modifier}
+                    {/if}
+                </h3>
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
-/* 
-.button-outlined {
-    display: inline-flex;
-    background-color: transparent;
-    color: rgb(204, 204, 204);
-    border: 2px solid rgb(204, 204, 204);
-    border-radius: 10%;
-    margin: 5px;
-    padding: 5px;
-    align-items: center;
-    justify-content: center;
-}
 
-.button-outlined:disabled {
-    color: rgba(204, 204, 204, 0.59);
-    border: 2px solid rgba(204, 204, 204, 0.59);
-} */
-
-.dice-box {
+.dice-button-box {
     display: flex;
     flex-wrap: wrap;
+    max-width: calc( 64px * 4 );
+    margin: 10px auto;
     justify-content: center;
-    min-height: 60px;
-    margin: 10px;
 }
-
-.die-slot {
+.die-button {
     display: inline-flex;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -161,27 +220,83 @@
     text-align: center;
 }
 
-.result-grid-c2 {
-    display: grid;
-    margin: 1em 0 1em 0;
-    grid-template-columns: repeat(4, auto);
+.total-readout {
+    font-size: 1em;
+}
+.total-readout > span {
+    margin: 0 0.25em;
 }
 
-.result-label {
-    color: rgba(204, 204, 204, 0.59);
-    width: 2.5em;
-    margin: 0;
-    padding: 0;
-    border: 1px solid rgba(204, 204, 204, 0.59);
-    justify-self: end;
+.operation-button-box {
+    display: grid;
+    min-height: 4em;
+    max-width: calc( 1em*24 );
+    grid-template-columns: 32% 32% 32%;
+    justify-content: center;
+    margin: 10px auto;
 }
-.result {
-    color: rgb(204, 204, 204);
-    width: 4.2em;
+
+.dice-box {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: calc( 48px * 5 );
+    min-height: 60px;
+    margin: 10px auto 10px auto;
+    justify-content: center;
+}
+
+.underule {
+    max-width: 256px;
+    border-color: rgb(88, 88, 88);
+    margin: 0 auto 0 auto;
+}
+
+.result-summary {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.result-summary > div {
+    margin: 4px;
+}
+.result-summary > .result-summary {
     margin: 0;
+}
+
+.result {
+    font-size: 1.17em;
+    font-weight: bold;
+
+    color: rgb(204, 204, 204);
+    width: 120px;
+    margin: 0 auto 0 auto;
     padding: 0;
     border: 1px solid rgb(204, 204, 204);
     justify-self: start;
+}
+
+.result-modifier {
+    display: flex;
+    justify-content: center;
+}
+.modifier-input {
+    font-size: 1.17em;
+    font-weight: bold;
+    text-align: center;
+
+    color: rgb(204, 204, 204);
+    width: 3em;
+    flex-basis: auto;
+    margin: 8px;
+    padding: 0;
+    border: 1px solid rgb(204, 204, 204);
+}
+.modifier-range {
+    width: 200px;
+    flex-basis: auto;
+    margin: 8px;
+    padding: 0;
+    border: 1px solid rgb(204, 204, 204);
 }
 
 </style>
