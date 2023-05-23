@@ -1,14 +1,14 @@
 <script lang="ts">
     import type { SvelteComponent } from 'svelte';
-    import Die from './Die.svelte'
+    import Die from '../../lib/Die.svelte';
 
     let nextId = 0
-    let diceData :Array<{id :number, sides :number, result :number, active :boolean}> = []
+    let diceData :Array<{id :number, faces :number, result :number, active :boolean}> = []
     let diceComps :Array<SvelteComponent> = []
     function addDie( sides :number ) {
         diceData = diceData.concat({
             id: nextId++,
-            sides: sides,
+            faces: sides,
             result: 0,
             active: false
         })
@@ -20,8 +20,8 @@
     // Aggregate the current selection whenever it changes
     let diceAgg = { active: 0, sum: 0, activeSum: 0, low: Infinity, high: -Infinity, activeLow: Infinity, activeHigh: -Infinity }
     $: diceAgg = diceData.reduce( (agg, die) => {
-        if (agg.hasOwnProperty( die.sides )) agg[die.sides] = agg[die.sides] + 1;
-        else agg[die.sides] = 1;
+        if (agg.hasOwnProperty( die.faces )) agg[die.faces] = agg[die.faces] + 1;
+        else agg[die.faces] = 1;
         agg.sum += die.result;
         if (die.result < agg.low) agg.low = die.result;
         if (die.result > agg.high) agg.high = die.result;
@@ -92,7 +92,7 @@
     
     <div class="dice-box">
         {#each diceData as die, i (die.id)}
-            <Die bind:this={diceComps[i]} sides={die.sides} bind:result={die.result} bind:active={die.active} />
+            <Die bind:this={diceComps[i]} faces={die.faces} bind:result={die.result} bind:active={die.active} />
         {/each}
     </div>
 

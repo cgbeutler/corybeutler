@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { SvelteComponent } from 'svelte';
-    import Die from './Die.svelte'
+    import Die from '../../../lib/Die.svelte';
 
     let diceData :Array<{id :number, result :number, active :boolean}> = [{
             id: 0,
@@ -48,7 +48,7 @@
     
     <div class="dice-box">
         {#each diceData as die, i (die.id)}
-            <Die bind:this={diceComps[i]} isStunt={i == 2} bind:result={die.result} bind:active={die.active} />
+            <Die bind:this={diceComps[i]} showPips={true} bind:result={die.result} bind:active={die.active} invert={i == 2} />
         {/each}
     </div>
 

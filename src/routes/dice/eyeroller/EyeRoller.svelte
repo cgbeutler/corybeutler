@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { SvelteComponent } from 'svelte';
-    import Die from './Die.svelte'
+    import Die from '../../../lib/Die.svelte';
 
     let nextId = 0
     let diceData :Array<{id :number, result :number, active :boolean}> = []
@@ -83,7 +83,7 @@
 
         <div class="dice-box">
             {#each diceData as die, i (die.id)}
-                <Die bind:this={diceComps[i]} bind:result={die.result} bind:active={die.active} />
+                <Die bind:this={diceComps[i]} faces={-2} bind:result={die.result} bind:active={die.active} />
             {/each}
         </div>
 
@@ -101,15 +101,15 @@
 
         <div class="die-diagram">
             <div></div>
-            <Die result={2} active={false} enabled={false} />
+            <Die faces={-2} result={2} active={false} enabled={false} />
             <div></div>
             <div></div>
-            <Die result={3} active={false} enabled={false} />
-            <Die result={1} active={false} enabled={false} />
-            <Die result={3} active={false} enabled={false} />
-            <Die result={3} active={false} enabled={false} />
+            <Die faces={-2} result={3} active={false} enabled={false} />
+            <Die faces={-2} result={1} active={false} enabled={false} />
+            <Die faces={-2} result={3} active={false} enabled={false} />
+            <Die faces={-2} result={3} active={false} enabled={false} />
             <div></div>
-            <Die result={2} active={false} enabled={false} />
+            <Die faces={-2} result={2} active={false} enabled={false} />
             <div></div>
             <div></div>
         </div>
@@ -119,11 +119,11 @@
         </p>
         
         <div class="die-list">
-            <div><Die result={1} active={false} enabled={false} /></div> <div>&frac16; Snake</div>
-            <div><Die result={2} active={false} enabled={false} /></div> <div>&frac13; Bat</div>
-            <div><Die result={3} active={false} enabled={false} /></div> <div>&frac12; Fish</div>
-            <div><Die result={1} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /></div> <div>&frac23; Pips</div>
-            <div><Die result={2} active={false} enabled={false} /> <Die result={3} active={false} enabled={false} /></div> <div>&frac56; Rings</div>
+            <div><Die faces={-2} result={1} active={false} enabled={false} /></div> <div>&frac16; Snake</div>
+            <div><Die faces={-2} result={2} active={false} enabled={false} /></div> <div>&frac13; Bat</div>
+            <div><Die faces={-2} result={3} active={false} enabled={false} /></div> <div>&frac12; Fish</div>
+            <div><Die faces={-2} result={1} active={false} enabled={false} /> <Die faces={-2} result={3} active={false} enabled={false} /></div> <div>&frac23; Pips</div>
+            <div><Die faces={-2} result={2} active={false} enabled={false} /> <Die faces={-2} result={3} active={false} enabled={false} /></div> <div>&frac56; Rings</div>
         </div>
 
         <p>Rolling multiple eye dice for the same thing multiplies that fraction by itself number-of-dice times. For example, rolling 2dE for fish gives you a 50% * 50% = 25% chance of rolling all fish.</p>
