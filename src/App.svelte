@@ -6,11 +6,13 @@
   import AgeRoller from "./routes/dice/ageroller/AgeRoller.svelte";
   import EyeRoller from "./routes/dice/eyeroller/EyeRoller.svelte";
   import HnS from './routes/hns/HnS.svelte';
+  import Motw from './routes/motw/Motw.svelte';
   import CharSheet from './routes/hns/char-sheet/CharSheet.svelte';
   // Scraps
   import Scraps from './routes/scraps/Scraps.svelte';
   import Groceries from './routes/scraps/groceries/Groceries.svelte';
   import Pokemon from './routes/scraps/pokemon/Pokemon.svelte';
+    import MotwCharacter from './routes/motw/character/MotwCharacter.svelte';
 
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
@@ -61,6 +63,9 @@
   <Route path="dice/eyeroller" component={EyeRoller} />
   <Route path="hns" component={HnS} />
   <Route path="hns/charsheet" component={CharSheet} />
+  <Route path="motw" component={Motw} />
+  <Route path="motw/character" component={MotwCharacter} />
+  <Route path="motw/character/:id" component={MotwCharacter} />
   <!--Scraps-->
   <Route path="scraps" component={Scraps} />
   <Route path="scraps/groceries" component={Groceries} />
