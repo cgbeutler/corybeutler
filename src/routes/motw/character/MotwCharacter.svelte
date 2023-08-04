@@ -9,11 +9,8 @@
     export let id: string = NIL;
     $: console.log( "id = '" + id + "'" )
 
-    // let chars = $characters // read value with automatic subscription
-    $: characterStore = $characters[id]
-    $: character = $characterStore
-    let displayName = "Unnamed Character"
-    $: character.name && (displayName = character.DisplayName)
+    let charList = $characters
+    $: character = charList[id]
     // characters.subscribe( chars => {
     //     character = chars[id]
     //     if (!validate(id) || id == NIL || !chars.hasOwnProperty(id)) {
@@ -24,39 +21,58 @@
     //     console.log( "Updated char '" + character + "' that has id '" + character.id + "' and name '" + character.name + "'" )
     // })
 
-    // $: character = chars[id]
-    $: console.log( "character = '" + character + "'" )
-    $: console.log( "name = '" + character?.name + "'" )
-
-    onMount(async () => {
-        if (!validate(id) || id == NIL) {
-            console.log( "Failed to load character with id '" + id + "'" );
-            navigate( "/motw" );
-            return;
-        }
-        if (!(character) || !(get(characters)[id])) {
-            console.log( "Failed to load character with id '" + id + "' or character was deleted" );
-            navigate( "/motw", { replace: true } );
-        }
+    // TODO: Figure out how to nav back when in invalid id
+    // onMount(async () => {
+    //     if (!validate(id) || id == NIL) {
+    //         console.log( "Failed to load character with id '" + id + "'" );
+    //         navigate( "/motw" );
+    //         return;
+    //     }
+    //     if (!(get(character)) || !(get(characters)[id])) {
+    //         console.log( "Failed to load character with id '" + id + "' or character was deleted" );
+    //         navigate( "/motw", { replace: true } );
+    //     }
 
 
-        // character = get(characters)[id];
-        // console.log( "Updated char '" + character + "'" )
-        // // if (!validate(id) || id == NIL || !chars.hasOwnProperty(id)) {
-        // //     console.log( "Failed to load character with id '" + id + "'" );
-        // //     navigate( "/motw" );
-        // //     return;
-        // // }
-    });
+    //     // character = get(characters)[id];
+    //     // console.log( "Updated char '" + character + "'" )
+    //     // // if (!validate(id) || id == NIL || !chars.hasOwnProperty(id)) {
+    //     // //     console.log( "Failed to load character with id '" + id + "'" );
+    //     // //     navigate( "/motw" );
+    //     // //     return;
+    //     // // }
+    // });
+    let nameInput;
+    $: if (nameInput) nameInput.style.width = $character.name.length + "ch";
 </script>
 
 
 <div class="page">
-    <h1>{(character.name == null || character.name == "") ? "Unnamed Character" : character.name }</h1>
-    <input bind:value={character.name}>
+    <input id="name-input" bind:this={nameInput} bind:value={$character.name}><button class="edit-button" on:click={()=>nameInput.focus()}></button>
 </div>
 
 <style>
 
+#name-input {
+    font-size: x-large;
+    text-align: center;
+    min-width: 10px;
+    border: 0;
+    background-color: transparent;
+}
+#name-input {
+    font-size: x-large;
+    min-width: 10px;
+}
+
+.edit-button {
+    width: 1em;
+    height: 1em;
+    padding: 0;
+    background-color: transparent;
+    background-image: url("/img/pencil.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { characters } from "../../lib/stores";
+    import { characters/*, getMotwCharacters*/ } from "../../lib/stores";
     import { navigate } from "svelte-routing";
     import { derived, get } from "svelte/store";
     import { NIL } from "uuid";
@@ -10,8 +10,8 @@
     //characters.set(...) // set value
 
     // get(characters) // read value
+    // let charList = getMotwCharacters(); // read value with automatic subscription
     let charList = $characters; // read value with automatic subscription
-    // $: names = charList.map((c) => c.name);
     // $: charList = derived(Object.values($characters), (n) => n);
     // $: names = $charList.map((c) => c.name);
 
@@ -31,22 +31,34 @@
 <div class="page">
     <h1>Monster of the Week Characters</h1>
 
+    <br />
+    <button class="button-outlined" on:click={goToNewCharacter}>
+        Create New Character
+    </button>
+    <br /><br />
+
     {#if Object.keys(charList).length == 0}
         No characters exist yet.
-        <button class="button-outlined" on:click={goToNewCharacter}>
-            Create New Character
-        </button>
     {:else}
-        <br />
-        <button class="button-outlined" on:click={goToNewCharacter}>
-            Create New Character
-        </button>
-        <br /><br />
-        {#each Object.entries(charList) as [id, character]}
-            <li>{get(character).name}</li>
+        <div class="char-list">
+        {#each Object.entries(charList) as [id, character], i}
+            <a href={"/motw/character/"+id} class="button-outlined char-button">{get(character).name}</a>
         {/each}
+        </div>
     {/if}
 </div>
 
 <style>
+    .char-list {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .char-button {
+        min-width: 50px;
+        max-width: 400px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 </style>

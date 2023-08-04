@@ -4,20 +4,46 @@ import { validate, v4 as uuidv4, NIL } from 'uuid';
 import { get, writable, type Writable } from 'svelte/store'
 
 const MotwKeyPrefix = "MotwCharacters/"
+const isBrowser = typeof window !== 'undefined';
+console.log("IsBrowser: " + isBrowser)
 
 
-function loadMotwCharacter(id: string) {
+
+// export function getMotwCharacters(): { [id:string]: string } {
+//   var characters: { [id: string]: string } = {};
+
+//   // Iterate over localStorage for characters
+//   for (var i = 0; i < localStorage.length; i++) {
+//     const key = localStorage.key(i)
+//     if (!key.startsWith(MotwKeyPrefix)) { continue }
+
+//     const id = key.substring(MotwKeyPrefix.length)
+//     const isBrowser = typeof window !== 'undefined';
+
+//     if (isBrowser) {
+//       const raw = localStorage.getItem(key)
+//       if (raw !== null) {
+//         var character = MotwCharacter.FromJson(raw);
+//         console.log( "name: '"+ character.name +"'" )
+//         characters[i] = (MotwCharacter.FromJson(raw) as MotwCharacter).name
+//       }
+//     }
+//   }
+
+//   return characters;
+// }
+
+
+function loadMotwCharacter(id: string): Writable<MotwCharacter> {
   const key = MotwKeyPrefix + id
   const store = writable(new MotwCharacter(id));
   const { subscribe, set, update } = store;
-  const isBrowser = typeof window !== 'undefined';
-  console.log("IsBrowser: " + isBrowser)
 
   if (isBrowser) {
     const raw = localStorage.getItem(key)
     if (raw !== null) {
       console.log( "Loading char " + raw )
-      set(JSON.parse(raw) as MotwCharacter)
+      set(MotwCharacter.FromJson(raw))
     }
     else {
       console.log( "New char" )
@@ -59,6 +85,15 @@ function loadMotwCharacters() {
 
   return {
     subscribe,
+    set: newList => {
+      console.log( "Set charList" )
+      // if (isBrowser) { localStorage.setItem(key, JSON.stringify(newChar)) }
+      set(newList);
+    },
+    update: updater => {
+      console.log( "Update charList" )
+      update(updater);
+    },
     refresh: () => {
       // Remove old, dead values
       for (const id of Object.keys(characters)) {
