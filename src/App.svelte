@@ -5,10 +5,7 @@
   import Dice from "./routes/dice/Dice.svelte";
   import AgeRoller from "./routes/dice/ageroller/AgeRoller.svelte";
   import EyeRoller from "./routes/dice/eyeroller/EyeRoller.svelte";
-  // Scraps
-  import Scraps from './routes/scraps/Scraps.svelte';
-  import Groceries from './routes/scraps/groceries/Groceries.svelte';
-  import Pokemon from './routes/scraps/pokemon/Pokemon.svelte';
+  import GroceryBag from './routes/grocery-bag/GroceryBag.svelte';
 
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
@@ -33,19 +30,16 @@
 <Router>
   <nav>
     <Link to="/" id="home-button" getProps={backLinkGetProps}><img src="/img/home.svg" alt="H" /></Link>
-    <Link to="dice" getProps={backLinkGetProps}>Dice</Link>
-    <Link to="dice/ageroller" getProps={backLinkGetProps}>Age Roller</Link>
-    <Link to="dice/eyeroller" getProps={backLinkGetProps}>Eye Roller</Link>
-    <!--Scraps-->
-    <Link to="scraps" getProps={backLinkGetProps}>Scraps</Link>
-    <Link to="scraps/groceries" getProps={backLinkGetProps}>Groceries</Link>
-    <Link to="scraps/pokemon" getProps={backLinkGetProps}>Pokemon</Link>
+    <Link to="/dice" getProps={backLinkGetProps}>Dice</Link>
+    <Link to="/dice/ageroller" getProps={backLinkGetProps}>Age Roller</Link>
+    <Link to="/dice/eyeroller" getProps={backLinkGetProps}>Eye Roller</Link>
+    <Link to="/grocery-bag" getProps={backLinkGetProps}>Groceries</Link>
   </nav>
   <nav>
-    <Link to="dice" getProps={forwardLinkGetProps}>Dice</Link>
-    <Link to="dice/ageroller" getProps={forwardLinkGetProps}>Age Roller</Link>
-    <Link to="dice/eyeroller" getProps={forwardLinkGetProps}>Eye Roller</Link>
-    <Link to="scraps" getProps={forwardLinkGetProps}>Scraps</Link>
+    <Link to="/dice" getProps={forwardLinkGetProps}>Dice</Link>
+    <Link to="/dice/ageroller" getProps={forwardLinkGetProps}>Age Roller</Link>
+    <Link to="/dice/eyeroller" getProps={forwardLinkGetProps}>Eye Roller</Link>
+    <Link to="/grocery-bag" getProps={forwardLinkGetProps}>Groceries</Link>
   </nav>
   
   <Route component="{NotFound}" />
@@ -53,8 +47,5 @@
   <Route path="dice" component={Dice} />
   <Route path="dice/ageroller" component={AgeRoller} />
   <Route path="dice/eyeroller" component={EyeRoller} />
-  <!--Scraps-->
-  <Route path="scraps" component={Scraps} />
-  <Route path="scraps/groceries" component={Groceries} />
-  <Route path="scraps/pokemon" component={Pokemon} />
+  <Route path="/grocery-bag" component={GroceryBag} />
 </Router>

@@ -7,7 +7,7 @@
   $: console.log(location);
 
 
-  let poemWords = [ "pretty as a flower", "deep as the ocean", "grand as a piano", "lovely as a summer's day", "deep as Mariana Trench", "deep as this poem" ]
+  let poemWords = [ "pretty as a flower", "deep as the ocean", "grand as a piano", "lovely as a summer's day", "deep as the Mariana Trench", "deep as this poem" ]
   let original = 3;
   let timer = tweened(original)
   let wordNum = 0;
@@ -31,16 +31,12 @@
 <div class="page">
   <h1>Cory Beutler</h1>
   <h2>A home page</h2>
-
+  <hr>
   <p>
     Try out my fancy <Link to="dice">Dice Roller</Link>!
   </p>
   <p>
-    Friends looking for crappy coordination stuff, like Pokemon GO or groceries will find them in my <Link to="scraps">Scraps</Link>!
-  </p>
-  <br/>
-  <p>
-    If you are not here for any of that, here is a haiku for you:<br/>
+    Here is a haiku for you:<br/>
   </p>
   <div class="poem">
     I wish I could bake<br>
