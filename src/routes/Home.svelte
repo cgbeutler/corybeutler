@@ -1,9 +1,30 @@
 <script lang="ts">
-    import Link from "../lib/Link.svelte";
+  import Link from "../lib/Link.svelte";
+  import { tweened } from 'svelte/motion';
 
 
   export let location;
   $: console.log(location);
+
+
+  let poemWords = [ "pretty as a flower", "deep as the ocean", "grand as a piano", "lovely as a summer's day", "deep as Mariana Trench", "deep as this poem" ]
+  let original = 3;
+  let timer = tweened(original)
+  let wordNum = 0;
+  let poemWord = poemWords[0];
+  let crossout = false;
+
+  setInterval(() => {
+    if ($timer > 0) $timer--;
+    else {
+      $timer += 3;
+      wordNum++;
+      if (wordNum > poemWords.length) wordNum = 0;
+      poemWord = poemWords[wordNum];
+    }
+    crossout = $timer < 1;
+  }, 1000);
+
 </script>
 
 
@@ -27,8 +48,13 @@
     here, have a raw egg
   </div>
   <p>
-    I hope you enjoyed that poem. Good luck in your many journeys.
+    I hope you enjoyed that poem. Here, have another:
   </p>
+  <div class="poem">
+    Your eyes are as {#if !crossout}{poemWord}{:else}<s>{poemWord}</s>{/if}<br>
+    Something something something...<br>
+    I love you
+  </div>
 </div>
 
 <!-- External links at the bottom -->
