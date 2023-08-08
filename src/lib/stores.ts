@@ -1,49 +1,23 @@
 // import { persisted } from 'svelte-local-storage-store'
-import { MotwCharacter } from './MotwCharacter'
+import { HnsCharacter } from './HnsCharacter'
 import { validate, v4 as uuidv4, NIL } from 'uuid';
 import { get, writable, type Writable } from 'svelte/store'
 
-const MotwKeyPrefix = "MotwCharacters/"
+const HnsKeyPrefix = "HnsCharacters/"
 const isBrowser = typeof window !== 'undefined';
 console.log("IsBrowser: " + isBrowser)
 
 
-
-// export function getMotwCharacters(): { [id:string]: string } {
-//   var characters: { [id: string]: string } = {};
-
-//   // Iterate over localStorage for characters
-//   for (var i = 0; i < localStorage.length; i++) {
-//     const key = localStorage.key(i)
-//     if (!key.startsWith(MotwKeyPrefix)) { continue }
-
-//     const id = key.substring(MotwKeyPrefix.length)
-//     const isBrowser = typeof window !== 'undefined';
-
-//     if (isBrowser) {
-//       const raw = localStorage.getItem(key)
-//       if (raw !== null) {
-//         var character = MotwCharacter.FromJson(raw);
-//         console.log( "name: '"+ character.name +"'" )
-//         characters[i] = (MotwCharacter.FromJson(raw) as MotwCharacter).name
-//       }
-//     }
-//   }
-
-//   return characters;
-// }
-
-
-function loadMotwCharacter(id: string): Writable<MotwCharacter> {
-  const key = MotwKeyPrefix + id
-  const store = writable(new MotwCharacter(id));
+function loadHnsCharacter(id: string): Writable<HnsCharacter> {
+  const key = HnsKeyPrefix + id
+  const store = writable(new HnsCharacter(id));
   const { subscribe, set, update } = store;
 
   if (isBrowser) {
     const raw = localStorage.getItem(key)
     if (raw !== null) {
       console.log( "Loading char " + raw )
-      set(MotwCharacter.FromJson(raw))
+      set(HnsCharacter.FromJson(raw))
     }
     else {
       console.log( "New char" )
@@ -69,16 +43,16 @@ function loadMotwCharacter(id: string): Writable<MotwCharacter> {
 }
 
 
-function loadMotwCharacters() {
-  var characters: { [id: string]: Writable<MotwCharacter> } = {};
+function loadHnsCharacters() {
+  var characters: { [id: string]: Writable<HnsCharacter> } = {};
 
   // Iterate over localStorage for characters
   for (var i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i)
-    if (!key.startsWith(MotwKeyPrefix)) { continue }
+    if (!key.startsWith(HnsKeyPrefix)) { continue }
 
-    const id = key.substring(MotwKeyPrefix.length)
-    characters[id] = loadMotwCharacter(id)
+    const id = key.substring(HnsKeyPrefix.length)
+    characters[id] = loadHnsCharacter(id)
   }
 
   const { subscribe, set, update } = writable(characters)
@@ -97,17 +71,17 @@ function loadMotwCharacters() {
     refresh: () => {
       // Remove old, dead values
       for (const id of Object.keys(characters)) {
-        const key = MotwKeyPrefix + id
+        const key = HnsKeyPrefix + id
         if (localStorage.getItem(key) === null) { characters[id] = undefined }
       }
       // Add any missing
       for (var i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i)
-        if (!key.startsWith(MotwKeyPrefix)) { continue }
+        if (!key.startsWith(HnsKeyPrefix)) { continue }
 
-        let id = key.substring(MotwKeyPrefix.length)
+        let id = key.substring(HnsKeyPrefix.length)
         let character = characters[id]
-        if (character === undefined) { characters[id] = loadMotwCharacter(id) }
+        if (character === undefined) { characters[id] = loadHnsCharacter(id) }
       }
     },
     create: () => {
@@ -117,21 +91,21 @@ function loadMotwCharacters() {
           if (!chars.hasOwnProperty(newId)) break;
           newId = String(uuidv4());
         }
-        const key = MotwKeyPrefix + newId;
+        const key = HnsKeyPrefix + newId;
         if (chars.hasOwnProperty(newId)) { console.error("Could not find spare id"); newId = NIL }
         if (localStorage.getItem(key) !== null) { console.error("Was in store, but not dict"); newId = NIL; }
-        else { chars[newId] = loadMotwCharacter(newId) }
+        else { chars[newId] = loadHnsCharacter(newId) }
         return chars;
       })
       return newId;
     },
-    findById: (id: string): Writable<MotwCharacter> => {
+    findById: (id: string): Writable<HnsCharacter> => {
       var character = characters[id]
       if (character === undefined) { console.log("No character found at '" + id + "'"); return null }
       return character
     },
     delete: (id: string) => {
-      let key = MotwKeyPrefix + id;
+      let key = HnsKeyPrefix + id;
       if (localStorage.getItem(key) === null) { console.log("No character found at '" + key + "'") }
       else { localStorage.removeItem(key); console.log("Character deleted from local store '" + key + "'") }
 
@@ -144,32 +118,4 @@ function loadMotwCharacters() {
   };
 }
 
-export const characters = loadMotwCharacters();
-
-// // Key 'characters' and initial value
-// export const characters: Writable<{[id: string]: MotwCharacter}> = persisted( 'characters', {} )
-
-// export function createCharacter(): string {
-//     let newId = uuidv4();
-//     characters.update( chars => {
-//         for (let i = 0; i < 100; i++) {
-//             if (!chars.hasOwnProperty( newId )) break;
-//             newId = String( uuidv4() );
-//         }
-//         if (chars.hasOwnProperty(newId)) { newId = NIL; return; }
-//         let newChar = new MotwCharacter( newId );
-//         chars[newId] = newChar;
-//         newId = newId
-//         return chars;
-//     } )
-//     return newId;
-// }
-// export function deleteCharacter(id: string): boolean {
-//     let result = false;
-//     characters.update( chars => {
-//         if (chars.hasOwnProperty(id)) { delete chars[id]; result = true; }
-//         return chars;
-//     } )
-//     return result;
-// }
-
+export const hnsCharacters = loadHnsCharacters();

@@ -5,14 +5,10 @@
   import Dice from "./routes/dice/Dice.svelte";
   import AgeRoller from "./routes/dice/ageroller/AgeRoller.svelte";
   import EyeRoller from "./routes/dice/eyeroller/EyeRoller.svelte";
-  import HnS from './routes/hns/HnS.svelte';
-  import Motw from './routes/motw/Motw.svelte';
-  import CharSheet from './routes/hns/char-sheet/CharSheet.svelte';
   // Scraps
   import Scraps from './routes/scraps/Scraps.svelte';
   import Groceries from './routes/scraps/groceries/Groceries.svelte';
   import Pokemon from './routes/scraps/pokemon/Pokemon.svelte';
-    import MotwCharacter from './routes/motw/character/MotwCharacter.svelte';
 
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
@@ -40,8 +36,6 @@
     <Link to="dice" getProps={backLinkGetProps}>Dice</Link>
     <Link to="dice/ageroller" getProps={backLinkGetProps}>Age Roller</Link>
     <Link to="dice/eyeroller" getProps={backLinkGetProps}>Eye Roller</Link>
-    <Link to="hns" getProps={backLinkGetProps}>HnS</Link>
-    <Link to="hns/charsheet" getProps={backLinkGetProps}>Character Sheet</Link>
     <!--Scraps-->
     <Link to="scraps" getProps={backLinkGetProps}>Scraps</Link>
     <Link to="scraps/groceries" getProps={backLinkGetProps}>Groceries</Link>
@@ -51,8 +45,6 @@
     <Link to="dice" getProps={forwardLinkGetProps}>Dice</Link>
     <Link to="dice/ageroller" getProps={forwardLinkGetProps}>Age Roller</Link>
     <Link to="dice/eyeroller" getProps={forwardLinkGetProps}>Eye Roller</Link>
-    <!-- <Link to="hns" getProps={forwardLinkGetProps}>HnS</Link> -->
-    <Link to="hns/charsheet" getProps={forwardLinkGetProps}>Character Sheet</Link>
     <Link to="scraps" getProps={forwardLinkGetProps}>Scraps</Link>
   </nav>
   
@@ -61,11 +53,6 @@
   <Route path="dice" component={Dice} />
   <Route path="dice/ageroller" component={AgeRoller} />
   <Route path="dice/eyeroller" component={EyeRoller} />
-  <Route path="hns" component={HnS} />
-  <Route path="hns/charsheet" component={CharSheet} />
-  <Route path="motw" component={Motw} />
-  <Route path="motw/character" component={MotwCharacter} />
-  <Route path="motw/character/:id" component={MotwCharacter} />
   <!--Scraps-->
   <Route path="scraps" component={Scraps} />
   <Route path="scraps/groceries" component={Groceries} />

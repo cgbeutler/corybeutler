@@ -98,7 +98,7 @@
     <p class="small-txt">
         Note: This page uses pogoapi.net to fetch info. If that gets out of date, ditto and release info may be wrong.<br/>
     </p>
-    <hr/>
+    <!-- <hr/>
     <h3 style="margin-bottom: 0;">Cory</h3>
     <p class="small-txt" style="margin-top: 0.2em;">Wants Shiny Dittos.<br/>They may currently may be:</p>
     <div>
@@ -106,7 +106,7 @@
             <span>{ditto.name}</span> &nbsp;
         {/each}
     </div>
-    <br/>
+    <br/> -->
     <hr/>
     <h3 style="margin-bottom: 0;">Michael</h3>
     <p class="small-txt" style="margin-top: 0.2em;">Wants a living lucky flush.<br/>See if you got what he needs:<br/>(Search does not indicate variant.)</p>
