@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     export let faces :number = 6;
     export let showPips :boolean = false;
     export let result :number = Infinity;
@@ -10,6 +12,7 @@
     const eyeFlag :number = -2;
 
     let die;
+    let overlayAnim;
 
     function _roll() {
         if (faces > 0) return Math.floor( Math.random() * faces ) + 1;
@@ -22,43 +25,71 @@
         }
         return 0;
     }
-    function _restartAnimation() {
-        if (!die) return;
+    function _restartRollAnimation() {
+        if (!die || !overlayAnim) return;
+        // Hack to clear the animation
         die.style.animation = 'none';
+        overlayAnim.style.animation = 'none';
         die.offsetHeight;
+        overlayAnim.offsetHeight;
+
+        // Start anims
+        let delay = "-" + (Math.random() * 0.1) + "s";
         die.style.animation = null;
+        die.style.animationDuration = '0.38s';
+        die.style.animationDelay = delay;
+        overlayAnim.style.animation = null;
+        // overlayAnim.style.animationDuration = 0.3 + (Math.random() * 0.4) + "s";
+        overlayAnim.style.animationDelay = delay;
+        die.offsetHeight;
+        overlayAnim.offsetHeight;
     }
 
     export function roll() {
         if (!enabled) return;
         result = _roll();
         active = false;
-        _restartAnimation();
+        _restartRollAnimation();
     }
     export function rollIfActive() {
         if (!active || !enabled) return;
         result = _roll();
         active = false;
-        _restartAnimation();
+        _restartRollAnimation();
     }
 
-    $: result = enabled ? _roll() : result
+    // $: result = (enabled ? _roll() : result)
+    onMount(() => {
+        if (!enabled)
+        {
+            // Hack to clear the animation
+            die.style.animation = 'none';
+            overlayAnim.style.animation = 'none';
+            die.offsetHeight;
+            overlayAnim.offsetHeight;
+        }
+        else roll();
+    })
 </script>
 
-<button bind:this={die} type="button" class:active={active} class:inverted={invert} class:show-pips={showPips}
-    on:click={() => {active = enabled && !active}}
-    class="die
-        faces-{faces == fateFlag ? "F" : faces == eyeFlag ? "E" : faces}
-        result-{result}
-    "
-    >
-    {result == Infinity ? "?" : result}
-</button>
+<div>
+    <button bind:this={die} type="button" class:active={active} class:inverted={invert} class:show-pips={showPips}
+        on:click={() => {active = enabled && !active}} disabled={!enabled}
+        class="die
+            faces-{faces == fateFlag ? "F" : faces == eyeFlag ? "E" : faces}
+            result-{result}
+        "
+        >
+        {result == Infinity ? "?" : result}
+        <div bind:this={overlayAnim} class="overlay-anim"></div>
+    </button>
+</div>
 
 <style>
 
 .die {
     display: inline-flex;
+    position: relative;
     background-image: url('/img/dice/d6.svg');
     background-color: transparent;
     background-repeat: no-repeat;
@@ -75,10 +106,10 @@
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-    animation-name: shake;
-    animation-duration: 0.2s;
-    transform-origin: 50% 50%;
+    animation-name: momentary-hide;
+    animation-duration: 0s;
     animation-iteration-count: 1;
+    transform-origin: 50% 50%;
 }
 .die.active {
     animation-name: shake;
@@ -112,6 +143,22 @@
 
 .die.inverted { filter: invert(100%); -webkit-filter: invert(100%); }
 
+.overlay-anim {
+    position: absolute;
+    padding: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    animation-name: roll;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
 
 @keyframes shake {
     0% { -webkit-transform: translate(1px, 1px) rotate(0deg); } 
@@ -125,6 +172,23 @@
     80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
     90% { -webkit-transform: translate(1px, 1px) rotate(0deg); }
     100% { -webkit-transform: translate(1px, -1px) rotate(-1deg); }
+}
+
+@keyframes momentary-hide {
+    0% { background-size: 1%; font-size: 0; }
+    99% { background-size: 1%; font-size: 0; }
+    100% { background-size: 100%; font-size: 18px; }
+}
+
+@keyframes roll {
+    0% { background-image: url('/img/dice/roll-0.svg'); }
+    8% { background-image: url('/img/dice/roll-2.svg'); }
+    16% { background-image: url('/img/dice/roll-1.svg'); }
+    24% { background-image: url('/img/dice/roll-3.svg'); }
+    32% { background-image: url('/img/dice/roll-5.svg'); }
+    40% { background-image: url('/img/dice/roll-4.svg'); background-size: 100%; }
+    48% { background-image: url('/img/dice/roll-shine.svg'); }
+    100% { background-image: none; background-size: 130%; }
 }
 
 </style>

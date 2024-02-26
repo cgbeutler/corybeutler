@@ -131,6 +131,15 @@
 </div>
 
 <style>
+.dice-box {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: calc( 48px * 5 );
+    min-height: 60px;
+    margin: 10px auto 10px auto;
+    justify-content: center;
+}
+
 .die-diagram {
     display: grid;
     margin: auto;
