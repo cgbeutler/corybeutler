@@ -39,10 +39,13 @@
   <div style="margin: 20px">
     <p style="margin: 0pt 10pt"> See my work at:</p>
     <a class="ext-link" href="https://github.com/cgbeutler">
-      <img src="/img/github_logo.png" alt="github.com/cgbeutler">
+      <img src="/img/github_logo.png" alt="github">
+    </a>
+    <a class="ext-link" href="https://stackoverflow.com/users/1884803">
+      <span style="white-space: nowrap;"><img src="/img/stack-white.svg" alt="stack"> stack<b>overflow</b></span>
     </a>
     <a class="ext-link" href="https://aristonaut.itch.io/">
-      <img src="/img/itchio_logo.svg" alt="aristonaut.itch.io">
+      <img src="/img/itchio_logo.svg" alt="itch.io">
     </a>
   </div>
   <p style="margin: 0pt 10pt"> Or see some of my experiments:</p>
