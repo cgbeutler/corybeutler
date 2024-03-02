@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Link from "../lib/Link.svelte";
+    import { link } from "svelte-routing";
   import { tweened } from 'svelte/motion';
 
 
@@ -30,11 +30,36 @@
 
 <div class="page">
   <h1>Cory Beutler</h1>
-  <h2>A home page</h2>
-  <hr>
+  <h2 style="margin-bottom: 0.2em;">A home page</h2>
+  <img src="/img/laserman.jpg" class="main-image" alt="me"/>
+</div>
+<div class="page">
+  <p> I am currently looking for work as a programmer. </p>
+  <p> See my <a href="/resume" use:link>Resume</a> or check out some of my work: </p>
+  <div style="margin: 20px">
+    <p style="margin: 0pt 10pt"> See my work at:</p>
+    <a class="ext-link" href="https://github.com/cgbeutler">
+      <img src="/img/github_logo.png" alt="github.com/cgbeutler">
+    </a>
+    <a class="ext-link" href="https://aristonaut.itch.io/">
+      <img src="/img/itchio_logo.svg" alt="aristonaut.itch.io">
+    </a>
+  </div>
+  <p style="margin: 0pt 10pt"> Or see some of my experiments:</p>
   <p>
-    Try out my fancy <Link to="dice">Dice Roller</Link>!
+    <a class="ext-link-big" href="http://proper.monster"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
   </p>
+</div>
+<div class="page">
+  <div style="margin: 20px">
+    <p style="margin: 0pt 10pt"> If you are here to see more of my art, you can find me at: </p>
+    <a href="https://m.soundcloud.com/aristonaut">
+      <img src="/img/soundcloud_logo.png" alt="m.soundcloud.com/aristonaut">
+    </a>
+    <a class="ext-link" href="https://aristonaut.itch.io/">
+      <img src="/img/itchio_logo.svg" alt="aristonaut.itch.io">
+    </a>
+  </div>
   <p>
     Here is a haiku for you:<br/>
   </p>
@@ -51,27 +76,57 @@
     Something something something...<br>
     I love you
   </div>
+  <p>
+    Thank you for visiting.
+  </p>
 </div>
 
-<!-- External links at the bottom -->
-<div class="ext-nav">
-  <span style="margin: 0pt 10pt"> You can also find me on:</span>
+<!-- <div class="ext-nav">
+  <span style="margin: 0pt 10pt"> See my Work at:</span>
   <a href="https://aristonaut.itch.io/">
     <img src="/img/itchio_logo.svg" alt="aristonaut.itch.io">
-  </a>
-  <a href="https://m.soundcloud.com/aristonaut">
-    <img src="/img/soundcloud_logo.png" alt="m.soundcloud.com/aristonaut">
   </a>
   <a href="https://github.com/cgbeutler">
     <img src="/img/github_logo.png" alt="github.com/cgbeutler">
   </a>
-</div>
+</div> -->
 
 
 <style>
-.poem {
-  color: gray;
-  text-align: center;
-  font-style: italic;
-}
+  .main-image {
+    width:260px;
+    height:260px;
+    object-fit:cover;
+    object-position:0 -45px;
+    border-radius: 5pt;
+  }
+
+  .ext-link-big {
+    display:inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 461 / 202;
+    max-width: 70vw;
+  }
+  .ext-link-big img{
+    width: 100%;
+    height: 100%;
+  }
+  
+  .ext-link {
+    display: inline-block;
+    background-color: #000000cc;
+    color: whitesmoke;
+    margin: 5pt;
+  }
+
+  .ext-link img {
+    height: 14pt;
+  }
+
+  .poem {
+    color: gray;
+    text-align: center;
+    font-style: italic;
+  }
 </style>
