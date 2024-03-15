@@ -54,12 +54,13 @@
   <hr>
   <p style="margin: 0pt 10pt"> See my web experiments:</p>
   <p>
-    A dice-rolling site
+    A dice-rolling site<br>
     <a class="ext-link-big" href="http://proper.monster"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
   </p>
   <hr>
   <div style="margin: 20px">
     <p style="margin: 0pt 10pt"> I am also an amateur artist. </p>
+    <br>
     <p style="margin: 0pt 10pt"> See my art at: </p>
     <a href="https://m.soundcloud.com/aristonaut">
       <img src="/img/soundcloud_logo.png" alt="m.soundcloud.com/aristonaut">
