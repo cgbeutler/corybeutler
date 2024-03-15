@@ -51,8 +51,8 @@
       <img src="/img/itchio_logo.svg" alt="itch.io">
     </a>
   </div>
-  <hr>
-  <p style="margin: 0pt 10pt"> See my web experiments:</p>
+  <br>
+  <p style="margin: 0pt 10pt"> Or try my web experiments:</p>
   <p>
     A dice-rolling site<br>
     <a class="ext-link-big" href="http://proper.monster"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
