@@ -1,4 +1,12 @@
 
+<div id="banner-image">
+</div>
+<div id="profile-image-box">
+  <img src="/img/DressedUp.jpg" class="profile-image" alt="me"/>
+  <!-- <img src="/img/LaserMan.jpg" class="profile-image" alt="me"/> -->
+</div>
+
+
 <div class="page work-experience">
     <h1>Resume for Cory G. Beutler</h1>
     <p style="text-align:center;">Denver, CO 80222 &emsp; <a href="mailto:jobopportunities@corybeutler.com">jobopportunities@corybeutler.com</a></p>
@@ -64,6 +72,34 @@
 </div>
 
 <style>
+    #banner-image {
+      position: relative;
+      background-image: url('/img/nebula_bg.jpg');
+      width: 100%;
+      height: 260px;
+      z-index: -1;
+    }
+  
+    #profile-image-box {
+      display: flex;
+      position: relative;
+      column-gap: 1em;
+      justify-content: center;
+      width: 100%;
+      height: 100px;
+      z-index: 2;
+    }
+  
+    .profile-image {
+      position: relative;
+      max-width: 200px;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      transform-origin: 50% 50%;
+      transform: translate(0,-50%) scale(2);
+    }
+    
     .work-experience {
         text-align: left;
         font-size: medium;

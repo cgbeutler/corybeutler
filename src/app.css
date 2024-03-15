@@ -2,7 +2,6 @@
   color-scheme: dark;
   color: #FDF6E3;
   background-color: black;
-  background-image: url('/img/nebula_bg.jpg');
   background-position: center;
   background-attachment: fixed;
 
@@ -19,16 +18,16 @@
 
 body {
   display: flex;
-  place-items: top;
+  width: 100%;
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
 }
 
 #app {
-  max-width: 550pt;
-  width: 84vw;
-  margin: 0px auto;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   padding: 0;
   text-align: center;
 }

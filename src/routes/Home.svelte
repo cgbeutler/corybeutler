@@ -27,15 +27,18 @@
 
 </script>
 
+<div id="banner-image">
+</div>
+<div id="profile-image-box">
+  <img src="/img/DressedUp.jpg" class="profile-image" alt="me"/>
+  <!-- <img src="/img/LaserMan.jpg" class="profile-image" alt="me"/> -->
+</div>
 
 <div class="page">
   <h1>Cory Beutler</h1>
-  <h2 style="margin-bottom: 0.2em;">A home page</h2>
-  <img src="/img/laserman.jpg" class="main-image" alt="me"/>
-</div>
-<div class="page">
-  <p> I am currently looking for work as a programmer. </p>
-  <p> See my <a href="/resume" use:link>Resume</a> or check out some of my work: </p>
+
+  <p> I am currently looking for work as a programmer.</p>
+  <p> See my <a href="/resume" use:link>Resume</a>.</p>
   <div style="margin: 20px">
     <p style="margin: 0pt 10pt"> See my work at:</p>
     <a class="ext-link" href="https://github.com/cgbeutler">
@@ -48,14 +51,16 @@
       <img src="/img/itchio_logo.svg" alt="itch.io">
     </a>
   </div>
-  <p style="margin: 0pt 10pt"> Or see some of my experiments:</p>
+  <hr>
+  <p style="margin: 0pt 10pt"> See my web experiments:</p>
   <p>
+    A dice-rolling site
     <a class="ext-link-big" href="http://proper.monster"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
   </p>
-</div>
-<div class="page">
+  <hr>
   <div style="margin: 20px">
-    <p style="margin: 0pt 10pt"> If you are here to see more of my art, you can find me at: </p>
+    <p style="margin: 0pt 10pt"> I am also an amateur artist. </p>
+    <p style="margin: 0pt 10pt"> See my art at: </p>
     <a href="https://m.soundcloud.com/aristonaut">
       <img src="/img/soundcloud_logo.png" alt="m.soundcloud.com/aristonaut">
     </a>
@@ -96,12 +101,32 @@
 
 
 <style>
-  .main-image {
-    width:260px;
-    height:260px;
-    object-fit:cover;
-    object-position:0 -45px;
-    border-radius: 5pt;
+  #banner-image {
+    position: relative;
+    background-image: url('/img/nebula_bg.jpg');
+    width: 100%;
+    height: 260px;
+    z-index: -1;
+  }
+
+  #profile-image-box {
+    display: flex;
+    position: relative;
+    column-gap: 1em;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+    z-index: 2;
+  }
+
+  .profile-image {
+    position: relative;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(0,-50%) scale(2);
   }
 
   .ext-link-big {

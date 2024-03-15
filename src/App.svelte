@@ -4,6 +4,7 @@
   import Home from "./routes/Home.svelte";
   import GroceryBag from './routes/grocery-bag/GroceryBag.svelte';
     import Resume from './routes/resume/Resume.svelte';
+    import StarPaint from './routes/star-paint/StarPaint.svelte';
 
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
@@ -37,4 +38,5 @@
   <Route path="/" component={Home} />
   <Route path="/resume" component={Resume} />
   <Route path="/grocery-bag" component={GroceryBag} />
+  <Route path="/star-paint" component={StarPaint} />
 </Router>

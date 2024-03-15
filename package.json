@@ -10,20 +10,30 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.0",
-    "@tsconfig/svelte": "^3.0.0",
-    "svelte": "^3.54.0",
-    "svelte-check": "^2.10.0",
-    "tslib": "^2.4.1",
-    "typescript": "^4.9.3",
-    "vite": "^4.0.5"
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@tsconfig/svelte": "^5.0.2",
+    "svelte": "^4.2.12",
+    "svelte-check": "^3.6.6",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.5"
   },
   "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.12.0",
+    "@theatre/core": "^0.7.0",
+    "@theatre/studio": "^0.7.0",
+    "@threlte/core": "^7.2.1",
+    "@threlte/extras": "^8.10.1",
+    "@threlte/flex": "^1.0.1",
+    "@threlte/rapier": "^2.0.0",
+    "@threlte/theatre": "^2.1.7",
+    "@types/three": "^0.162.0",
     "copyfiles": "^2.4.1",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
-    "svelte-local-storage-store": "^0.5.0",
-    "svelte-routing": "^1.6.0",
-    "uuid": "^9.0.0"
+    "svelte-local-storage-store": "^0.6.4",
+    "svelte-routing": "^2.12.0",
+    "three": "^0.162.0",
+    "uuid": "^9.0.1"
   }
 }
