@@ -38,23 +38,22 @@
   <h1>Cory Beutler</h1>
 
   <p> I am currently looking for work as a programmer.</p>
-  <p> See my <a href="/resume" use:link>Resume</a>.</p>
   <div style="margin: 20px">
-    <p style="margin: 0pt 10pt"> See my work at:</p>
+    <p style="margin: 0pt 10pt"> See my <a href="/resume" use:link>Resume</a> or<br>see my work at: </p>
+    <a class="ext-link" href="https://aristonaut.itch.io/">
+      <img src="/img/itchio_logo.svg" alt="itch.io">
+    </a>
     <a class="ext-link" href="https://github.com/cgbeutler">
       <img src="/img/github_logo.png" alt="github">
     </a>
     <a class="ext-link" href="https://stackoverflow.com/users/1884803">
       <span style="white-space: nowrap;"><img src="/img/stack-white.svg" alt="stack"> stack<b>overflow</b></span>
     </a>
-    <a class="ext-link" href="https://aristonaut.itch.io/">
-      <img src="/img/itchio_logo.svg" alt="itch.io">
-    </a>
   </div>
   <br>
-  <p style="margin: 0pt 10pt"> Or try my web experiments:</p>
+  <p style="margin: 0pt 10pt"> Other web experiments:</p>
   <p>
-    A dice-rolling site<br>
+    Proper Monster dice-rolling site<br>
     <a class="ext-link-big" href="http://proper.monster"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
   </p>
   <hr>
