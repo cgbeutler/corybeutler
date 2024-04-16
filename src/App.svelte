@@ -2,10 +2,9 @@
   import { Router, Link, link, Route } from 'svelte-routing';
   import NotFound from './routes/NotFound.svelte';
   import Home from "./routes/Home.svelte";
-  import Dice from "./routes/dice/Dice.svelte";
-  import AgeRoller from "./routes/dice/ageroller/AgeRoller.svelte";
-  import EyeRoller from "./routes/dice/eyeroller/EyeRoller.svelte";
   import GroceryBag from './routes/grocery-bag/GroceryBag.svelte';
+    import Resume from './routes/resume/Resume.svelte';
+    import StarPaint from './routes/star-paint/StarPaint.svelte';
 
   function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
     if (href === "/") return isCurrent ? { class: "hidden" } : {};
@@ -30,22 +29,14 @@
 <Router>
   <nav>
     <Link to="/" id="home-button" getProps={backLinkGetProps}><img src="/img/home.svg" alt="H" /></Link>
-    <Link to="/dice" getProps={backLinkGetProps}>Dice</Link>
-    <Link to="/dice/ageroller" getProps={backLinkGetProps}>Age Roller</Link>
-    <Link to="/dice/eyeroller" getProps={backLinkGetProps}>Eye Roller</Link>
-    <Link to="/grocery-bag" getProps={backLinkGetProps}>Groceries</Link>
   </nav>
   <nav>
-    <Link to="/dice" getProps={forwardLinkGetProps}>Dice</Link>
-    <Link to="/dice/ageroller" getProps={forwardLinkGetProps}>Age Roller</Link>
-    <Link to="/dice/eyeroller" getProps={forwardLinkGetProps}>Eye Roller</Link>
-    <Link to="/grocery-bag" getProps={forwardLinkGetProps}>Groceries</Link>
+    <!-- <Link to="/dice" getProps={forwardLinkGetProps}>Dice</Link> -->
   </nav>
   
   <Route component="{NotFound}" />
   <Route path="/" component={Home} />
-  <Route path="dice" component={Dice} />
-  <Route path="dice/ageroller" component={AgeRoller} />
-  <Route path="dice/eyeroller" component={EyeRoller} />
+  <Route path="/resume" component={Resume} />
   <Route path="/grocery-bag" component={GroceryBag} />
+  <Route path="/star-paint" component={StarPaint} />
 </Router>
