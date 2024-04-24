@@ -18,7 +18,7 @@
 
 <div id="doghouse">
   <div id="dog" class:animation_dogwalk_exit={walk} on:click={pet}>
-    <img id="dog-sprite" src="/public/img/dog.png" class:animation_dogwalk={walk}/>
+    <img id="dog-sprite" src="/img/dog.png" class:animation_dogwalk={walk}/>
   </div>
   <div id="heart" class:animation_heartfly={playHeartFly} bind:this={heart}>♥️</div>
 </div>
