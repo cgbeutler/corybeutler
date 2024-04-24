@@ -67,12 +67,16 @@ h1 + h2 {
 
 #home-button {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  position: fixed;
+  width: 1.5em;
+  height: 1.5em;
+  left: 5px;
+  top: 5px;
   background-color: #000000cc;
   border: 3pt solid rgba(0, 0, 0, 0);
   border-radius: 1em;
   text-decoration: none;
+  margin: 0;
   padding: 0;
 }
 
@@ -207,7 +211,7 @@ button:focus-visible {
   border: 2px solid rgb(204, 204, 204);
   border-radius: 8px;
   margin: 5px;
-  padding: 5px 8px;
+  padding: 5px 10px;
   align-items: center;
   justify-content: center;
 }

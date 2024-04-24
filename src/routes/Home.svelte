@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { link } from "svelte-routing";
+  import { link } from "svelte-routing";
   import { tweened } from 'svelte/motion';
-
+  import Dog from "../lib/Dog.svelte";
 
   export let location;
   $: console.log(location);
@@ -25,7 +25,19 @@
     crossout = $timer < 1;
   }, 1000);
 
+  let dogSeen = false;
+  const scroll_observer = new IntersectionObserver( entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dogSeen = true;
+      }
+    });
+  });
+  let doghouse: Element;
+  $: if (doghouse != null) scroll_observer.observe(doghouse);
+
 </script>
+
 
 <div id="banner-image">
 </div>
@@ -39,23 +51,16 @@
 
   <p> I am currently looking for work as a programmer.</p>
   <div style="margin: 20px">
-    <p style="margin: 0pt 10pt"> See my <a href="/resume" use:link>Resume</a> or<br>see my work at: </p>
-    <a class="ext-link" href="https://aristonaut.itch.io/">
-      <img src="/img/itchio_logo.svg" alt="itch.io">
-    </a>
-    <a class="ext-link" href="https://github.com/cgbeutler">
-      <img src="/img/github_logo.png" alt="github">
-    </a>
-    <a class="ext-link" href="https://stackoverflow.com/users/1884803">
-      <span style="white-space: nowrap;"><img src="/img/stack-white.svg" alt="stack"> stack<b>overflow</b></span>
-    </a>
+    <a href="/resume" class="button-outlined" use:link>Online Resume</a>
+    <a href="https://www.linkedin.com/in/cory-beutler/" class="button-outlined" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
   </div>
   <br>
-  <p style="margin: 0pt 10pt"> Other web experiments:</p>
+  <p style="margin: 0pt 10pt"> Personal Projects:</p>
   <p>
-    Proper Monster dice-rolling site<br>
-    <a class="ext-link-big" href="http://proper.monster"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
+    <a class="ext-link-big" href="http://proper.monster" target="_blank" rel="noopener noreferrer"><img src="/img/ProperMonster.png" alt="proper monster"/></a>
+    <a class="ext-link-big" href="https://monstervial.itch.io/minescroller" target="_blank" rel="noopener noreferrer"><img src="/img/Minescroller.png" alt="minescroller"/></a>
   </p>
+  <!--
   <hr>
   <div style="margin: 20px">
     <p style="margin: 0pt 10pt"> I am also an amateur artist. </p>
@@ -87,20 +92,25 @@
   <p>
     Thank you for visiting.
   </p>
+  -->
 </div>
 
-<!-- <div class="ext-nav">
-  <span style="margin: 0pt 10pt"> See my Work at:</span>
-  <a href="https://aristonaut.itch.io/">
-    <img src="/img/itchio_logo.svg" alt="aristonaut.itch.io">
+<div class="ext-nav">
+  <span style="margin: 0pt 10pt"> Profiles:</span>
+  <a class="ext-link" href="https://github.com/cgbeutler">
+    <img src="/img/github_logo.png" alt="github">
   </a>
-  <a href="https://github.com/cgbeutler">
-    <img src="/img/github_logo.png" alt="github.com/cgbeutler">
+  <a class="ext-link" href="https://stackoverflow.com/users/1884803">
+    <span style="white-space: nowrap;"><img src="/img/stack-white.svg" alt="stack"> stack<b>overflow</b></span>
   </a>
-</div> -->
+  <a class="ext-link" href="https://aristonaut.itch.io/">
+    <img src="/img/itchio_logo.svg" alt="itch.io">
+  </a>
+</div>
 
+<Dog/>
 
-<style>
+<style lang="css">
   #banner-image {
     position: relative;
     background-image: url('/img/nebula_bg.jpg');
@@ -137,8 +147,11 @@
     max-width: 70vw;
   }
   .ext-link-big img{
+    position: relative;
     width: 100%;
-    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
   
   .ext-link {
@@ -157,4 +170,5 @@
     text-align: center;
     font-style: italic;
   }
+
 </style>
