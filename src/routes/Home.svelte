@@ -49,7 +49,7 @@
 <div class="page">
   <h1>Cory Beutler</h1>
 
-  <p> I am currently looking for work as a programmer.</p>
+  <p> I am currently looking for work as a software developer.</p>
   <div style="margin: 20px">
     <a href="/resume" class="button-outlined" use:link>Online Resume</a>
     <a href="https://www.linkedin.com/in/cory-beutler/" class="button-outlined" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>

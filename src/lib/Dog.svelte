@@ -4,7 +4,7 @@
   let pets = 0;
   let walk = false;
   function pet() {
-    if (++pets > 3) walk = true;
+    if (++pets >= 3) walk = true;
     else start_heartfly();
   }
   let heart: HTMLDivElement;
