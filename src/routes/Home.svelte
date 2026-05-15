@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { link } from "svelte-routing";
+  import { pathname } from "../pathnameStore";
   import { tweened } from 'svelte/motion';
   import Dog from "../lib/Dog.svelte";
 
-  export let location;
-  $: console.log(location);
-
+  function navigate(path: string) {
+    window.history.pushState(null, '', path);
+    pathname.set(path);
+  }
 
   let poemWords = [ "pretty as a flower", "deep as the ocean", "grand as a piano", "lovely as a summer's day", "deep as the Mariana Trench", "deep as this poem" ]
   let original = 3;
@@ -51,8 +52,8 @@
 
   <p> I am currently looking for work as a software developer.</p>
   <div style="margin: 20px">
-    <a href="/resume" class="button-outlined" use:link>Online Resume</a>
-    <a href="https://www.linkedin.com/in/cory-beutler/" class="button-outlined" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+    <button class="button-outlined" on:click={() => navigate('/resume')}>Online Resume</button>
+    <a href="https://www.linkedin.com/in/cory-beutler" class="button-outlined" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
   </div>
   <br>
   <p style="margin: 0pt 10pt"> Personal Projects:</p>

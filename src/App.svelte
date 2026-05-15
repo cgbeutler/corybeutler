@@ -1,42 +1,53 @@
 <script lang="ts">
-  import { Router, Link, link, Route } from 'svelte-routing';
+  import { pathname } from './pathnameStore';
   import NotFound from './routes/NotFound.svelte';
   import Home from "./routes/Home.svelte";
   import GroceryBag from './routes/grocery-bag/GroceryBag.svelte';
-    import Resume from './routes/resume/Resume.svelte';
-    import StarPaint from './routes/star-paint/StarPaint.svelte';
+  import Resume from './routes/resume/Resume.svelte';
+  import StarPaint from './routes/star-paint/StarPaint.svelte';
 
-  function backLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
-    if (href === "/") return isCurrent ? { class: "hidden" } : {};
-    if (isPartiallyCurrent || isCurrent) return { class: "active" };
-    return { class: "hidden" };
+  function navigate(path: string) {
+    window.history.pushState(null, '', path);
+    pathname.set(path);
   }
-  function forwardLinkGetProps({ location, href, isPartiallyCurrent, isCurrent }) {
-    if (isPartiallyCurrent || isCurrent) return { class: "hidden" };
 
-    let pathname = location.pathname;
-    if (pathname[pathname.length-1] === "/") pathname = pathname.slice(0,-1);
-    let locCount, hrefCount;
-    for(var i = locCount = 0; i < pathname.length; locCount += +("/" === pathname[i++]));
-    for(var i = hrefCount = 0; i < href.length; hrefCount += +("/" === href[i++]));
-    if (hrefCount - locCount > 1) return { class: "hidden" };
-    if (!href.startsWith(pathname)) return { class: "hidden" }
-    return {};
+  function isActive(path: string) {
+    return $pathname === path;
+  }
+
+  function isPartiallyActive(path: string) {
+    if (path === '/') return $pathname === '/';
+    return $pathname.startsWith(path);
+  }
+
+  function getBackLinkClass(path: string) {
+    if (path === "/") return isActive('/') ? "hidden" : "";
+    return isPartiallyActive(path) ? "active" : "hidden";
   }
 </script>
 
+<nav>
+  <button
+    id="home-button"
+    class={getBackLinkClass('/')}
+    on:click={() => navigate('/')}
+  >
+    <img src="/img/home.svg" alt="H" />
+  </button>
+</nav>
+<nav>
+  <!-- Navigation items here -->
+</nav>
 
-<Router>
-  <nav>
-    <Link to="/" id="home-button" getProps={backLinkGetProps}><img src="/img/home.svg" alt="H" /></Link>
-  </nav>
-  <nav>
-    <!-- <Link to="/dice" getProps={forwardLinkGetProps}>Dice</Link> -->
-  </nav>
-  
-  <Route component="{NotFound}" />
-  <Route path="/" component={Home} />
-  <Route path="/resume" component={Resume} />
-  <Route path="/grocery-bag" component={GroceryBag} />
-  <Route path="/star-paint" component={StarPaint} />
-</Router>
+{#if isActive('/')}
+  <Home />
+{:else if isActive('/resume')}
+  <Resume />
+{:else if isActive('/grocery-bag')}
+  <GroceryBag />
+{:else if isActive('/star-paint')}
+  <StarPaint />
+{:else}
+  <NotFound />
+{/if}
+
