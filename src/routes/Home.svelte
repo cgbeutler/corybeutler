@@ -52,7 +52,6 @@
 
   <p> I am currently looking for work as a software developer.</p>
   <div style="margin: 20px">
-    <button class="button-outlined" on:click={() => navigate('/resume')}>Online Resume</button>
     <a href="https://www.linkedin.com/in/cory-beutler" class="button-outlined" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
   </div>
   <br>
