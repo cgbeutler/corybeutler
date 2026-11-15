@@ -3,7 +3,6 @@
   import NotFound from './routes/NotFound.svelte';
   import Home from "./routes/Home.svelte";
   import GroceryBag from './routes/grocery-bag/GroceryBag.svelte';
-  import StarPaint from './routes/star-paint/StarPaint.svelte';
 
   function navigate(path: string) {
     window.history.pushState(null, '', path);
@@ -42,8 +41,6 @@
   <Home />
 {:else if isActive('/grocery-bag')}
   <GroceryBag />
-{:else if isActive('/star-paint')}
-  <StarPaint />
 {:else}
   <NotFound />
 {/if}
